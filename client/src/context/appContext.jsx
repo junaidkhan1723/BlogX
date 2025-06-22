@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -51,7 +52,7 @@ export const AppContextProvider = (props) => {
     useEffect(()=>{
         getAuthState();
 
-    },[])
+    },[getAuthState])
 
     const value = {      
         backendUrl,
