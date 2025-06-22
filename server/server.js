@@ -9,20 +9,19 @@ import userRouter from "./routes/userRoutes.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-//  Added both localhost and Vercel frontend
+// deployed frontend and localhost
 const allowedOrigins = [
   'http://localhost:5173',
   'https://blog-x-six.vercel.app'
 ];
 
-//  Updated CORS setup
+//  cors options
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // allow Postman or curl
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      return callback(new Error('Not allowed by CORS'));
+      callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
@@ -30,12 +29,10 @@ const corsOptions = {
 
 connectDB();
 
+app.use(cors(corsOptions));            //  Must be before routes
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions)); // Use the updated options
-
-//  preflight support (helps with some POST requests)
-app.options('*', cors(corsOptions));
+app.options('*', cors(corsOptions));   // Handle preflight OPTIONS
 
 app.get('/', (req, res) => {
   res.send("API Working");
