@@ -15,7 +15,16 @@ const allowedOrigins = [
   'https://blog-x-six.vercel.app'
 ];
 
-//  cors options
+// 🔐 Add CORS headers manually — this fixes Render/Vercel issues
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+// 🎯 CORS options setup
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -29,10 +38,10 @@ const corsOptions = {
 
 connectDB();
 
-app.use(cors(corsOptions));            //  Must be before routes
+app.use(cors(corsOptions));               // Enable CORS
 app.use(express.json());
 app.use(cookieParser());
-app.options('*', cors(corsOptions));   // Handle preflight OPTIONS
+app.options('*', cors(corsOptions));      // Preflight OPTIONS support
 
 app.get('/', (req, res) => {
   res.send("API Working");
