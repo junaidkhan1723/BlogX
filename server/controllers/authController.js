@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import userModel from '../models/userModel.js'
 import transporter from "../config/nodemailer.js";
+import { EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE, WELCOME_TEMPLATE } from "../config/emailTemplates.js";
 
 
 //user Registration function
@@ -29,13 +30,14 @@ export const register = async (req, res) => {
         maxAge: 7*24*60*60*1000
     });
 
-
   // Sending Welcome Email
     var mailOptions = {
         from: process.env.SENDER_EMAIL,
         to : email,
-        subject : 'Welcome To Shayari.com',
-        text : `Welcome to Shayari.Com , Your account has been created with email id: ${email} `
+        subject : 'Welcome To BlogX',
+       // text : `Welcome to BlogX , Your account has been created with email id: ${email} `
+         html: WELCOME_TEMPLATE.replace(/{{email}}/g, user.email).replace(/{{username}}/g, user.name)
+
     }
          
         await transporter.sendMail(mailOptions);
@@ -118,16 +120,16 @@ export const sendVerifyOtp = async (req,res)=>{
         const otp = String(Math.floor(100000 + Math.random()* 900000));
 
         user.verifyOtp = otp;
-        user.verifyOtpExpireAt = Date.now() + 24 * 60 * 60 * 1000;
+        user.verifyOtpExpireAt = Date.now() + 15 * 60 * 1000;
 
         await user.save();
          console.log("Verification OTP :", user.verifyOtp); //Here is the Varification OTP
-
+        //send Varification Email
         const mailOption = { 
           from: process.env.SENDER_EMAIL,
            to : user.email,
-        subject : 'Account Verification OTP',
-        text : `Your OTP is ${otp}. Verify your account using this OTP. Welcome to Shayari.com  `
+          subject : 'Account Verification OTP',
+          html: EMAIL_VERIFY_TEMPLATE.replace(/{{otp}}/g, otp).replace(/{{email}}/g, user.email).replace(/{{username}}/g, user.name)
         }
 
         await transporter.sendMail(mailOption);
@@ -217,12 +219,9 @@ export const sendResetOtp = async (req, res)=>{
         const mailOption = { 
           from: process.env.SENDER_EMAIL,
            to : user.email,
-        subject : 'Password Reset OTP',
-        text : `Your OTP for Resetting your Passward is  ${otp}. Use this OTP to Reset Your PassWard.
-         I hide my feelings like a password unknown,
-         Forget it once, and I’m locked out alone!
-         Made a password so hard to recall,
-         Now “Forgot Password” is my life's protocol!`
+        subject : 'Password Reset OTP ',
+          html: PASSWORD_RESET_TEMPLATE.replace(/{{email}}/g, user.email).replace(/{{username}}/g, user.name).replace(/{{otp}}/g, otp)
+          
         }
  
          console.log("Reset OTP:", user.resetOtp); // Here is The Reset OTP 
