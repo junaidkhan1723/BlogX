@@ -128,7 +128,7 @@ export const sendVerifyOtp = async (req,res)=>{
         const mailOption = { 
           from: process.env.SENDER_EMAIL,
            to : user.email,
-          subject : 'Account Verification OTP',
+          subject : 'Account Verification OTP ',
           html: EMAIL_VERIFY_TEMPLATE.replace(/{{otp}}/g, otp).replace(/{{email}}/g, user.email).replace(/{{username}}/g, user.name)
         }
 
@@ -219,7 +219,7 @@ export const sendResetOtp = async (req, res)=>{
         const mailOption = { 
           from: process.env.SENDER_EMAIL,
            to : user.email,
-        subject : 'Password Reset OTP ',
+        subject : 'Password Reset OTP 🔐',
           html: PASSWORD_RESET_TEMPLATE.replace(/{{email}}/g, user.email).replace(/{{username}}/g, user.name).replace(/{{otp}}/g, otp)
           
         }
