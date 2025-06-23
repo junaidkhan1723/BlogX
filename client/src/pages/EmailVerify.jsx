@@ -15,6 +15,29 @@ function EmailVerify() {
 
   axios.defaults.withCredentials = true;
 
+  // Send initial OTP when component mounts
+  useEffect(() => {
+    const sendInitialOtp = async () => {
+      try {
+        const { data } = await axios.post(backendUrl + "/api/auth/send-verify-otp", {
+          userId: userData?._id,
+        });
+        if (data.success) {
+          toast.success("OTP sent to your email.");
+          setCooldown(60); // Start cooldown after initial OTP
+        } else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        toast.error("Failed to send OTP.");
+      }
+    };
+
+    if (isLoggedin && userData?._id && !userData.isAccountVerified) {
+      sendInitialOtp();
+    }
+  }, [isLoggedin, userData, backendUrl]);
+
   // Focus on the first OTP input when component mounts
   useEffect(() => {
     inputRefs.current[0]?.focus();
@@ -29,14 +52,12 @@ function EmailVerify() {
       setIsOtpComplete(allFilled);
     };
 
-    // Add input event listener to each OTP input box
     inputRefs.current.forEach((input) => {
       if (input) {
         input.addEventListener("input", checkOtpFilled);
       }
     });
 
-    // Cleanup: remove event listeners on unmount
     return () => {
       inputRefs.current.forEach((input) => {
         if (input) {
@@ -49,14 +70,20 @@ function EmailVerify() {
   // Start cooldown timer when resend OTP is triggered
   useEffect(() => {
     if (cooldown > 0) {
-      const timer = setInterval(() => setCooldown((prev) => prev - 1), 1000);
+      const timer = setInterval(() => {
+        setCooldown((prev) => {
+          if (prev <= 1) clearInterval(timer);
+          return prev - 1;
+        });
+      }, 1000);
       return () => clearInterval(timer);
     }
   }, [cooldown]);
 
   // Move to next input field on typing
   const handleInput = (e, index) => {
-    if (e.target.value.length > 0 && index < inputRefs.current.length - 1) {
+    const value = e.target.value;
+    if (value.length > 0 && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1].focus();
     }
   };
@@ -68,52 +95,59 @@ function EmailVerify() {
     }
   };
 
-  // Handle paste of full OTP at once
+  // Handle paste of full OTP
   const handlePaste = (e) => {
-    const paste = e.clipboardData.getData("text");
-    const pasteArray = paste.split("");
-    pasteArray.forEach((char, index) => {
+    const paste = e.clipboardData.getData("text").slice(0, 6);
+    paste.split("").forEach((char, index) => {
       if (inputRefs.current[index]) {
         inputRefs.current[index].value = char;
       }
     });
+    setIsOtpComplete(true);
+    inputRefs.current[paste.length - 1]?.focus();
   };
 
-  // Submit OTP to backend for account verification
+  // Submit OTP to backend for verification
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const otp = inputRefs.current.map((input) => input.value).join("");
 
     try {
-      const { data } = await axios.post(
-        backendUrl + "/api/auth/verify-account",
-        { otp }
-      );
+      const { data } = await axios.post(backendUrl + "/api/auth/verify-account", {
+        userId: userData?._id,
+        otp,
+      });
 
       if (data.success) {
         toast.success(data.message);
-        getUserData(); // Refresh user data after verification
+        await getUserData(); // Refresh user data
         navigate("/"); // Redirect to home
       } else {
         toast.error(data.message);
-        // Clear inputs on failure
         inputRefs.current.forEach((input) => (input.value = ""));
+        setIsOtpComplete(false);
         inputRefs.current[0]?.focus();
       }
     } catch (error) {
       toast.error(error.message);
+      inputRefs.current.forEach((input) => (input.value = ""));
+      setIsOtpComplete(false);
+      inputRefs.current[0]?.focus();
     }
   };
 
-  // Trigger resend OTP API and start cooldown
+  // Trigger resend OTP API
   const handleResendOtp = async () => {
     try {
-      const { data } = await axios.post(
-        backendUrl + "/api/auth/send-verify-otp"
-      );
+      const { data } = await axios.post(backendUrl + "/api/auth/send-verify-otp", {
+        userId: userData?._id,
+      });
       if (data.success) {
         toast.success("OTP resent to your email.");
-        setCooldown(60); // Start 60 second cooldown
+        setCooldown(60);
+        inputRefs.current.forEach((input) => (input.value = ""));
+        setIsOtpComplete(false);
+        inputRefs.current[0]?.focus();
       } else {
         toast.error(data.message);
       }
@@ -122,7 +156,7 @@ function EmailVerify() {
     }
   };
 
-  // Redirect already verified users if they visit this page
+  // Redirect verified users
   useEffect(() => {
     if (isLoggedin && userData?.isAccountVerified) {
       navigate("/");
@@ -161,7 +195,7 @@ function EmailVerify() {
                 type="text"
                 maxLength="1"
                 required
-                className="w-12 h-12 bg-gradient-to-br from-purple-400 to bg-blue-400 text-white text-center text-xl rounded-md"
+                className="w-12 h-12 bg-gradient-to-br from-purple-400 to-blue-400 text-white text-center text-xl rounded-md"
                 ref={(el) => (inputRefs.current[index] = el)}
                 onInput={(e) => handleInput(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
@@ -175,7 +209,7 @@ function EmailVerify() {
           disabled={!isOtpComplete}
           className={`w-full py-3 rounded-full transition-all ${
             isOtpComplete
-              ? "bg-gradient-to-br from-purple-400 to bg-indigo-900 text-white"
+              ? "bg-gradient-to-br from-purple-400 to-indigo-900 text-white"
               : "bg-gray-400 text-gray-200 cursor-not-allowed"
           }`}
         >

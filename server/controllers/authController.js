@@ -4,7 +4,7 @@ import userModel from '../models/userModel.js';
 import transporter from "../config/nodemailer.js";
 import { EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE, WELCOME_TEMPLATE } from "../config/emailTemplates.js";
 
-// user Registration function
+// User Registration Function
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -45,7 +45,7 @@ export const register = async (req, res) => {
   }
 };
 
-// user Login Function
+// User Login Function
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -78,7 +78,7 @@ export const login = async (req, res) => {
   }
 };
 
-// user LogOut function
+// User Logout Function
 export const logout = async (req, res) => {
   try {
     res.clearCookie('token', {
@@ -94,34 +94,51 @@ export const logout = async (req, res) => {
   }
 };
 
-// send Verification OTP to the user Email
+// Send Verification OTP to the User Email with 60-second Cooldown
 export const sendVerifyOtp = async (req, res) => {
   try {
     const { userId } = req.body;
-    const user = await userModel.findById(userId);
+    const now = Date.now();
 
-    if (user.isAccountVerified) {
-      return res.json({ success: false, message: "Account Already Verified" });
-    }
+    // Atomically find and update the user if cooldown has passed
+    const user = await userModel.findOneAndUpdate(
+      {
+        _id: userId,
+        isAccountVerified: false,
+        $or: [
+          { otpSentAt: null }, // No OTP sent yet
+          { otpSentAt: { $lt: new Date(now - 60000) } } // 60 seconds have passed
+        ]
+      },
+      {
+        $set: {
+          verifyOtp: String(Math.floor(100000 + Math.random() * 900000)),
+          verifyOtpExpireAt: now + 15 * 60 * 1000,
+          otpSentAt: new Date(now)
+        }
+      },
+      { new: true } // Return the updated document
+    );
 
-    // Cooldown logic: block resend within 60 seconds
-    if (user.otpSentAt && Date.now() - new Date(user.otpSentAt).getTime() < 60000) {
+    if (!user) {
+      // Check why the update failed
+      const existingUser = await userModel.findById(userId);
+      if (!existingUser) {
+        return res.json({ success: false, message: "User Not Found" });
+      }
+      if (existingUser.isAccountVerified) {
+        return res.json({ success: false, message: "Account Already Verified" });
+      }
       return res.json({ success: false, message: "Please wait before requesting another OTP." });
     }
-
-    const otp = String(Math.floor(100000 + Math.random() * 900000));
-
-    user.verifyOtp = otp;
-    user.verifyOtpExpireAt = Date.now() + 15 * 60 * 1000;
-    user.otpSentAt = new Date(); // record current time for cooldown
-
-    await user.save();
 
     const mailOption = {
       from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: 'Account Verification OTP',
-      html: EMAIL_VERIFY_TEMPLATE.replace(/{{otp}}/g, otp).replace(/{{email}}/g, user.email).replace(/{{username}}/g, user.name)
+      html: EMAIL_VERIFY_TEMPLATE.replace(/{{otp}}/g, user.verifyOtp)
+        .replace(/{{email}}/g, user.email)
+        .replace(/{{username}}/g, user.name)
     };
 
     await transporter.sendMail(mailOption);
@@ -131,7 +148,7 @@ export const sendVerifyOtp = async (req, res) => {
   }
 };
 
-// verify Email account
+// Verify Email Account
 export const verifyEmail = async (req, res) => {
   const { userId, otp } = req.body;
 
@@ -157,7 +174,7 @@ export const verifyEmail = async (req, res) => {
     user.isAccountVerified = true;
     user.verifyOtp = '';
     user.verifyOtpExpireAt = 0;
-    user.otpSentAt = null; // clear cooldown timestamp
+    user.otpSentAt = null; // Clear cooldown timestamp
 
     await user.save();
     return res.json({ success: true, message: 'Email Verified Successfully' });
@@ -166,7 +183,7 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
-// Check if user is Authenticated
+// Check if User is Authenticated
 export const isAuthenticated = async (req, res) => {
   try {
     return res.json({ success: true });
@@ -175,7 +192,7 @@ export const isAuthenticated = async (req, res) => {
   }
 };
 
-// Send Password Reset OTP
+// Send Password Reset OTP with 60-second Cooldown
 export const sendResetOtp = async (req, res) => {
   const { email } = req.body;
 
@@ -184,28 +201,43 @@ export const sendResetOtp = async (req, res) => {
   }
 
   try {
-    const user = await userModel.findOne({ email });
-    if (!user) {
-      return res.json({ success: false, message: "User Not Found" });
-    }
+    const now = Date.now();
 
-    // Cooldown logic: block resend within 60 seconds
-    if (user.resetOtpSentAt && Date.now() - new Date(user.resetOtpSentAt).getTime() < 60000) {
+    // Atomically find and update the user if cooldown has passed
+    const user = await userModel.findOneAndUpdate(
+      {
+        email,
+        $or: [
+          { resetOtpSentAt: null }, // No OTP sent yet
+          { resetOtpSentAt: { $lt: new Date(now - 60000) } } // 60 seconds have passed
+        ]
+      },
+      {
+        $set: {
+          resetOtp: String(Math.floor(100000 + Math.random() * 900000)),
+          resetOtpExpireAt: now + 15 * 60 * 1000,
+          resetOtpSentAt: new Date(now)
+        }
+      },
+      { new: true }
+    );
+
+    if (!user) {
+      // Check why the update failed
+      const existingUser = await userModel.findOne({ email });
+      if (!existingUser) {
+        return res.json({ success: false, message: "User Not Found" });
+      }
       return res.json({ success: false, message: "Please wait before requesting another OTP." });
     }
-
-    const otp = String(Math.floor(100000 + Math.random() * 900000));
-    user.resetOtp = otp;
-    user.resetOtpExpireAt = Date.now() + 15 * 60 * 1000;
-    user.resetOtpSentAt = new Date(); // record current time for cooldown
-
-    await user.save();
 
     const mailOption = {
       from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: 'Password Reset OTP',
-      html: PASSWORD_RESET_TEMPLATE.replace(/{{email}}/g, user.email).replace(/{{username}}/g, user.name).replace(/{{otp}}/g, otp)
+      html: PASSWORD_RESET_TEMPLATE.replace(/{{email}}/g, user.email)
+        .replace(/{{username}}/g, user.name)
+        .replace(/{{otp}}/g, user.resetOtp)
     };
 
     await transporter.sendMail(mailOption);
@@ -241,7 +273,7 @@ export const resetPassword = async (req, res) => {
     user.password = hashedPassword;
     user.resetOtp = '';
     user.resetOtpExpireAt = 0;
-    user.resetOtpSentAt = null; // clear cooldown timestamp
+    user.resetOtpSentAt = null; // Clear cooldown timestamp
 
     await user.save();
     return res.json({ success: true, message: "Password has been reset Successfully" });
