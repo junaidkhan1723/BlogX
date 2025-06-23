@@ -297,7 +297,7 @@ export const WELCOME_TEMPLATE = `
       <p>Thanks for joining <strong>BlogX</strong> — your space for exploring tech blogs, dev stories, and the latest in innovation.</p>
       <p>We've registered your email as: <strong style="color:#60a5fa">{{email}}</strong></p>
       <p>Start your journey and share your voice with the world!</p>
-      <a class="button" href="https://blogx.com/dashboard">Go to Dashboard 🚀</a>
+      <a class="button" href="https://blog-x-six.vercel.app/">Go to Dashboard 🚀</a>
     </div>
     <div class="footer">
       <div class="social">
