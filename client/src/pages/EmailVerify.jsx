@@ -168,26 +168,26 @@ function EmailVerify() {
           Enter the 6-digit code sent to your email ID.
         </p>
 
-        <div
-          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6"
-          onPaste={handlePaste}
-        >
-          {Array(6)
-            .fill(0)
-            .map((_, index) => (
-              <input
-                key={index}
-                type="text"
-                maxLength="1"
-                required
-                aria-label={`OTP digit ${index + 1}`}
-                className="w-12 h-12 bg-gradient-to-br from-purple-400 to-blue-400 text-white text-center text-xl rounded-md"
-                ref={(el) => (inputRefs.current[index] = el)}
-                onInput={(e) => handleInput(e, index)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-              />
-            ))}
-        </div>
+       <div
+  className="grid grid-cols-6 gap-2 sm:gap-3 justify-center mb-6 max-w-xs mx-auto"
+  onPaste={handlePaste}
+>
+  {Array(6)
+    .fill(0)
+    .map((_, index) => (
+      <input
+        key={index}
+        type="text"
+        maxLength="1"
+        required
+        className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-purple-400 to-blue-400 text-white text-center text-xl rounded-md"
+        ref={(el) => (inputRefs.current[index] = el)}
+        onInput={(e) => handleInput(e, index)}
+        onKeyDown={(e) => handleKeyDown(e, index)}
+      />
+    ))}
+</div>
+
 
         <button
           type="submit"
