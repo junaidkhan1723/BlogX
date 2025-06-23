@@ -199,22 +199,26 @@ function ResetPassword() {
           <p className="text-center mb-6 text-indigo-300">
             Enter the 6-digit code sent to your email id.
           </p>
-          <div className="flex justify-between mb-6" onPaste={handlePaste}>
-            {Array(6)
-              .fill(0)
-              .map((_, index) => (
-                <input
-                  type="text"
-                  maxLength="1"
-                  key={index}
-                  required
-                  className="w-12 h-12 bg-gradient-to-br from-purple-400 to bg-blue-400 text-white text-center text-xl rounded-md"
-                  ref={(el) => (inputRefs.current[index] = el)}
-                  onInput={(e) => handleInput(e, index)}
-                  onKeyDown={(e) => handleKeyDown(e, index)}
-                />
-              ))}
-          </div>
+          <div
+  className="grid grid-cols-6 gap-2 sm:gap-3 justify-center mb-6 max-w-xs mx-auto"
+  onPaste={handlePaste}
+>
+  {Array(6)
+    .fill(0)
+    .map((_, index) => (
+      <input
+        key={index}
+        type="text"
+        maxLength="1"
+        required
+        className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-purple-400 to-blue-400 text-white text-center text-xl rounded-md"
+        ref={(el) => (inputRefs.current[index] = el)}
+        onInput={(e) => handleInput(e, index)}
+        onKeyDown={(e) => handleKeyDown(e, index)}
+      />
+    ))}
+</div>
+
           <button className="w-full py-2.5 bg-gradient-to-br from-purple-400 to bg-indigo-900 text-white rounded-full">
             Submit
           </button>
