@@ -15,33 +15,27 @@ function ResetPassword() {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [otp, setOtp] = useState(0);
-
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isOtpSubmitted, setIsOtpSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   // OTP Input refs
   const inputRefs = useRef([]);
 
-  // Cooldown timer state
-  const [cooldown, setCooldown] = useState(10); // Initial cooldown
-  const [initialCooldownDone, setInitialCooldownDone] = useState(false);
-
-  // Cooldown effect hook
+  // Cooldown effect hook for resend button
   useEffect(() => {
     let interval;
-    if (cooldown > 0) {
+    if (resendCooldown > 0) {
       interval = setInterval(() => {
-        setCooldown((prev) => {
-          if (prev <= 1) {
-            clearInterval(interval);
-            setInitialCooldownDone(true);
-          }
+        setResendCooldown((prev) => {
+          if (prev <= 1) clearInterval(interval);
           return prev - 1;
         });
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [cooldown]);
+  }, [resendCooldown]);
 
   // Handle input auto focus
   const handleInput = (e, index) => {
@@ -72,10 +66,8 @@ function ResetPassword() {
   // Send reset OTP
   const onSubmitEmail = async (e) => {
     e.preventDefault();
-    if (cooldown > 0) {
-      toast.warn("Please wait before requesting another OTP.");
-      return;
-    }
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
       const { data } = await axios.post(
         backendUrl + "/api/auth/send-reset-opt",
@@ -84,12 +76,36 @@ function ResetPassword() {
       if (data.success) {
         toast.success(data.message);
         setIsEmailSent(true);
-        setCooldown(60); // cooldown for resend
+        setResendCooldown(60);
       } else {
         toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Resend OTP function
+  const handleResendOtp = async () => {
+    if (resendCooldown > 0 || isSubmitting) return;
+    setIsSubmitting(true);
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/api/auth/send-reset-opt",
+        { email }
+      );
+      if (data.success) {
+        toast.success("OTP resent to your email.");
+        setResendCooldown(60);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error("Failed to resend OTP.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -159,14 +175,14 @@ function ResetPassword() {
             />
           </div>
           <button
-            disabled={!initialCooldownDone || cooldown > 0}
+            disabled={isSubmitting}
             className={`w-full py-3 text-white rounded-full transition-all ${
-              !initialCooldownDone || cooldown > 0
+              isSubmitting
                 ? "bg-gray-500 cursor-not-allowed"
                 : "bg-gradient-to-br from-purple-400 to bg-indigo-900"
             }`}
           >
-            {cooldown > 0 ? `Wait ${cooldown}s` : "Submit"}
+            {isSubmitting ? `Sending...` : "Submit"}
           </button>
         </form>
       )}
@@ -183,7 +199,7 @@ function ResetPassword() {
           <p className="text-center mb-6 text-indigo-300">
             Enter the 6-digit code sent to your email ID.
           </p>
-          <div className="flex justify-between mb-8" onPaste={handlePaste}>
+          <div className="flex justify-between mb-6" onPaste={handlePaste}>
             {Array(6)
               .fill(0)
               .map((_, index) => (
@@ -202,6 +218,18 @@ function ResetPassword() {
           <button className="w-full py-2.5 bg-gradient-to-br from-purple-400 to bg-indigo-900 text-white rounded-full">
             Submit
           </button>
+          <div className="text-center mt-4">
+            <button
+              type="button"
+              onClick={handleResendOtp}
+              disabled={resendCooldown > 0 || isSubmitting}
+              className={`text-indigo-300 hover:underline text-sm ${
+                resendCooldown > 0 ? "cursor-not-allowed text-gray-400" : ""
+              }`}
+            >
+              {resendCooldown > 0 ? `Resend OTP in ${resendCooldown}s` : "Resend OTP"}
+            </button>
+          </div>
         </form>
       )}
 
