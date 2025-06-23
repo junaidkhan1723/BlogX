@@ -149,7 +149,7 @@ function EmailVerify() {
   }, [isLoggedin, userData, navigate]);
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-[url("/BlogBG.png")] bg-cover bg-center'>
+    <div className='flex flex-col items-center justify-center min-h-screen px-4 bg-[url("/BlogBG.png")] bg-cover bg-center'>
       <img
         onClick={() => navigate("/")}
         src={assets.logo}
@@ -159,7 +159,7 @@ function EmailVerify() {
 
       <form
         onSubmit={onSubmitHandler}
-        className="bg-slate-900 px-4 py-8 sm:p-8 rounded-lg shadow-lg w-96 text-sm"
+        className="bg-slate-900 w-full max-w-sm px-6 py-8 rounded-lg shadow-lg text-sm"
       >
         <h1 className="text-white text-2xl font-semibold text-center mb-4">
           Email Verify OTP
@@ -168,7 +168,10 @@ function EmailVerify() {
           Enter the 6-digit code sent to your email ID.
         </p>
 
-        <div className="flex justify-between mb-6" onPaste={handlePaste}>
+        <div
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6"
+          onPaste={handlePaste}
+        >
           {Array(6)
             .fill(0)
             .map((_, index) => (

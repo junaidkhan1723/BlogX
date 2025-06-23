@@ -191,13 +191,13 @@ function ResetPassword() {
       {isEmailSent && !isOtpSubmitted && (
         <form
           onSubmit={onSubmitOTP}
-          className="bg-slate-900 px-6 py-8 sm:p-8 rounded-lg shadow-lg w-96 text-sm"
+          className="bg-slate-900 px-8 py-8 sm:p-8 rounded-lg shadow-lg w-96 text-sm"
         >
           <h1 className="text-white text-2xl font-semibold text-center mb-4">
             Reset Password OTP
           </h1>
           <p className="text-center mb-6 text-indigo-300">
-            Enter the 6-digit code sent to your email ID.
+            Enter the 6-digit code sent to your email id.
           </p>
           <div className="flex justify-between mb-6" onPaste={handlePaste}>
             {Array(6)
