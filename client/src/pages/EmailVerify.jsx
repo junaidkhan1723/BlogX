@@ -172,7 +172,7 @@ function EmailVerify() {
   className="grid grid-cols-6 gap-2 sm:gap-3 justify-center mb-6 max-w-xs mx-auto"
   onPaste={handlePaste}
 >
-  {Array(6)
+  {Array(6) 
     .fill(0)
     .map((_, index) => (
       <input
