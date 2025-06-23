@@ -23,7 +23,8 @@ function ResetPassword() {
   const inputRefs = useRef([]);
 
   // Cooldown timer state
-  const [cooldown, setCooldown] = useState(0);
+  const [cooldown, setCooldown] = useState(10); // Initial cooldown
+  const [initialCooldownDone, setInitialCooldownDone] = useState(false);
 
   // Cooldown effect hook
   useEffect(() => {
@@ -31,7 +32,10 @@ function ResetPassword() {
     if (cooldown > 0) {
       interval = setInterval(() => {
         setCooldown((prev) => {
-          if (prev <= 1) clearInterval(interval);
+          if (prev <= 1) {
+            clearInterval(interval);
+            setInitialCooldownDone(true);
+          }
           return prev - 1;
         });
       }, 1000);
@@ -80,7 +84,7 @@ function ResetPassword() {
       if (data.success) {
         toast.success(data.message);
         setIsEmailSent(true);
-        setCooldown(60);
+        setCooldown(60); // cooldown for resend
       } else {
         toast.error(data.message);
       }
@@ -155,9 +159,9 @@ function ResetPassword() {
             />
           </div>
           <button
-            disabled={cooldown > 0}
+            disabled={!initialCooldownDone || cooldown > 0}
             className={`w-full py-3 text-white rounded-full transition-all ${
-              cooldown > 0
+              !initialCooldownDone || cooldown > 0
                 ? "bg-gray-500 cursor-not-allowed"
                 : "bg-gradient-to-br from-purple-400 to bg-indigo-900"
             }`}
