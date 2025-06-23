@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { AppContent } from "../context/appContext";
@@ -24,6 +24,20 @@ function ResetPassword() {
 
   // Cooldown timer state
   const [cooldown, setCooldown] = useState(0);
+
+  // Cooldown effect hook
+  useEffect(() => {
+    let interval;
+    if (cooldown > 0) {
+      interval = setInterval(() => {
+        setCooldown((prev) => {
+          if (prev <= 1) clearInterval(interval);
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [cooldown]);
 
   // Handle input auto focus
   const handleInput = (e, index) => {
@@ -67,23 +81,12 @@ function ResetPassword() {
         toast.success(data.message);
         setIsEmailSent(true);
         setCooldown(60);
-        startCooldown();
       } else {
         toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
     }
-  };
-
-  // Start 60-second cooldown timer
-  const startCooldown = () => {
-    let count = 60;
-    const interval = setInterval(() => {
-      count--;
-      setCooldown(count);
-      if (count <= 0) clearInterval(interval);
-    }, 1000);
   };
 
   // Handle OTP form submission
@@ -168,7 +171,7 @@ function ResetPassword() {
       {isEmailSent && !isOtpSubmitted && (
         <form
           onSubmit={onSubmitOTP}
-          className="bg-slate-900 px-4 py-8 sm:p-8 rounded-lg shadow-lg w-96 text-sm"
+          className="bg-slate-900 px-6 py-8 sm:p-8 rounded-lg shadow-lg w-96 text-sm"
         >
           <h1 className="text-white text-2xl font-semibold text-center mb-4">
             Reset Password OTP

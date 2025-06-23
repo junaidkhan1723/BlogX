@@ -7,28 +7,50 @@ import { toast } from "react-toastify";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { userData, backendUrl, setUserData, setIsLoggedin } =
-    useContext(AppContent);
+  const { userData, backendUrl, setUserData, setIsLoggedin } = useContext(AppContent);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
+  // Cooldown state (seconds)
+  const [cooldown, setCooldown] = useState(0);
+  const [isSending, setIsSending] = useState(false);
+
+  // Function to send verification OTP
   const sendVerificationOtp = async () => {
+    if (cooldown > 0 || isSending) return;
+
     try {
+      setIsSending(true); // disable button
       axios.defaults.withCredentials = true;
+
       const { data } = await axios.post(
         backendUrl + "/api/auth/send-verify-otp"
       );
+
       if (data.success) {
-        navigate("/email-verify");
         toast.success(data.message);
+        navigate("/email-verify");
+        setCooldown(10); // Start cooldown
       } else {
         toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsSending(false); // re-enable send flag after request
     }
   };
 
+  // Handle cooldown countdown
+  useEffect(() => {
+    if (cooldown > 0) {
+      const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [cooldown]);
+
+  // Logout
   const logout = async () => {
     try {
       axios.defaults.withCredentials = true;
@@ -44,6 +66,7 @@ function Navbar() {
     }
   };
 
+  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -81,9 +104,17 @@ function Navbar() {
               {!userData.isAccountVerified && (
                 <li
                   onClick={sendVerificationOtp}
-                  className="py-2 px-4 hover:bg-gray-200 cursor-pointer"
+                  className={`py-2 px-4 ${
+                    cooldown > 0 || isSending
+                      ? "text-gray-400 cursor-not-allowed"
+                      : "hover:bg-gray-200 cursor-pointer"
+                  }`}
                 >
-                  Verify Email
+                  {isSending
+                    ? "Sending..."
+                    : cooldown > 0
+                    ? `Wait ${cooldown}s`
+                    : "Verify Email"}
                 </li>
               )}
               <li
