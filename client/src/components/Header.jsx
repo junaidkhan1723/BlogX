@@ -1,8 +1,12 @@
 import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
 import { AppContent } from '../context/appContext'
+import { useNavigate } from "react-router-dom";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const Header = ()=> {
+
+  const navigate = useNavigate();
 
   const {userData} = useContext(AppContent);
 
@@ -13,9 +17,12 @@ const Header = ()=> {
       <h2 className='text-2xl sm:text-5xl font-semibold mb-4 '>Welcome To BlogX</h2>
       <p className='mb-8 text-sm sm:text-xl max-w-md font-semibold text-purple-950'>This is your space to explore the latest and coolest tech trends in the IT world.
            </p>
-        <button className=' border border-gray-500 rounded-full px-8 py-2.5 hover:bg-gray-100 transition-all'>
-            Get Started
-        </button>
+          {userData ? 
+        <button  onClick={() => navigate("/blog-x")} className=' border border-gray-500 rounded-full px-8 py-2.5 hover:bg-gray-100 transition-all'>
+          <i class="bi bi-door-open"></i>  Get Started
+        </button>: <button  onClick={() => navigate("/login")} className=' border border-gray-500 rounded-full px-8 py-2.5  hover:bg-gray-100 transition-all'>
+        <i class="bi bi-door-closed-fill"></i> Login
+        </button>  }
 
     </div>
   )

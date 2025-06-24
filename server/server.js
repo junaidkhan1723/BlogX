@@ -9,14 +9,26 @@ import userRouter from "./routes/userRoutes.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-const allowedOrigins = ["https://blog-x-six.vercel.app"]; //frontEnd Link
-
+const allowedOrigins = [
+  "http://localhost:5173",                // local frontend (Vite)
+  "https://blog-x-six.vercel.app"        // production frontend
+];
 connectDB();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: allowedOrigins, credentials: true })); //here
-
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin like mobile apps or curl
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 //API Endpoints
 
 app.get("/", (req, res) => {

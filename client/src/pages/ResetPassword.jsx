@@ -70,7 +70,7 @@ function ResetPassword() {
     setIsSubmitting(true);
     try {
       const { data } = await axios.post(
-        backendUrl + "/api/auth/send-reset-opt",
+        backendUrl + "/api/auth/send-reset-otp",
         { email }
       );
       if (data.success) {
@@ -93,7 +93,7 @@ function ResetPassword() {
     setIsSubmitting(true);
     try {
       const { data } = await axios.post(
-        backendUrl + "/api/auth/send-reset-opt",
+        backendUrl + "/api/auth/send-reset-otp",
         { email }
       );
       if (data.success) {

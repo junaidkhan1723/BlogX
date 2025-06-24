@@ -79,8 +79,8 @@ function Navbar() {
 
   return (
     <div
-      className="w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 
-                 fixed top-0 left-0 z-50 backdrop-blur-md bg-transparent"
+      className="w-full flex justify-between items-center p-4 sm:p-2 sm:px-16 
+                 fixed top-0 left-0 z-50 backdrop-blur-sm bg-transparent"
     >
       <img
         src={assets.logo}
@@ -93,10 +93,10 @@ function Navbar() {
         <div ref={menuRef} className="relative">
           <div
             onClick={() => setMenuOpen(!menuOpen)}
-            className="w-10 h-10 flex justify-center items-center border border-gray-500
-              text-black font-semibold rounded-full hover:bg-gray-300 transition-all cursor-pointer"
+            className="w-16 h-12 flex justify-center items-center border border-gray-500
+              text-black font-semibold rounded-lg hover:bg-gray-300 transition-all cursor-pointer"
           >
-            {userData.name[0].toUpperCase()}
+            <span className="text-xl">{userData.name[0].toUpperCase()}</span><sup className="text-blue-800"><i class="bi bi-patch-check-fill"></i></sup>
           </div>
 
           {menuOpen && (
@@ -129,9 +129,9 @@ function Navbar() {
       ) : (
         <button
           onClick={() => navigate("/login")}
-          className="flex items-center gap-2 border border-gray-500 rounded-full px-6 py-2 text-gray-800 hover:bg-gray-100 transition-all"
+          className="flex items-center text-xl-center gap-2 border border-gray-500 rounded-full px-4 py-4 text-gray-800 hover:bg-gray-100 transition-all"
         >
-          Login <img src={assets.arrow_icon} alt="arrow" />
+          <i class="bi bi-person-add"></i>
         </button>
       )}
     </div>
