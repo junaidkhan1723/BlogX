@@ -49,7 +49,7 @@ function Login() {
         });
 
         if (data.success) {
-          toast.success(data.message);
+          toast.success("Logged In Successfully");
           setIsLoggedin(true);
           navigate("/");
           getUserData();
