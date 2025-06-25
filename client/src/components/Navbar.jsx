@@ -105,7 +105,7 @@ function Navbar() {
               className="w-16 h-12 flex justify-center items-center border border-gray-500
             text-black font-semibold rounded-lg hover:bg-gray-300 transition-all cursor-pointer"
             >
-              <span className="text-xl">{userData.name[0].toUpperCase()}</span>
+              <span className="text-xl select-none">{userData.name[0].toUpperCase()}</span>
 
               {/* ✅ Show tick if verified */}
               {userData.isAccountVerified && (
@@ -117,7 +117,7 @@ function Navbar() {
 
             {/* ✅ Dropdown Menu */}
             {menuOpen && (
-              <ul className="absolute right-0 mt-2 bg-gray-300 text-sm rounded shadow-md z-10 min-w-[140px]">
+              <ul className="absolute right-0 mt-2 bg-gray-300 text-sm rounded shadow-md z-10 min-w-[140px] select-none">
                 {!userData.isAccountVerified && (
                   <li
                     onClick={sendVerificationOtp}
@@ -143,7 +143,7 @@ function Navbar() {
                   onClick={() => {
                     navigate("/");
                   }}
-                  className="py-2 px-4 hover:bg-gray-200 cursor-pointer text-purple-600"
+                  className="py-2 px-4 hover:bg-gray-200 cursor-pointer text-purple-600 select-none"
                 >
                   <i class="bi bi-house"></i> Home
                 </li>
@@ -153,7 +153,7 @@ function Navbar() {
                   onClick={() => {
                     navigate("/your-space");
                   }}
-                  className="py-2 px-4 hover:bg-gray-200 cursor-pointer text-blue-600"
+                  className="py-2 px-4 hover:bg-gray-200 cursor-pointer text-blue-600 select-none"
                 >
                   <i class="bi bi-person-check"></i> Profile
                 </li>
@@ -163,7 +163,7 @@ function Navbar() {
                   onClick={() => {
                     navigate("/blog-x");
                   }}
-                  className="py-2 px-4 hover:bg-gray-200 cursor-pointer text-gray-700"
+                  className="py-2 px-4 hover:bg-gray-200 cursor-pointer text-gray-700 select-none"
                 >
                   <i class="bi bi-book"></i> Read BX
                 </li>
@@ -171,7 +171,7 @@ function Navbar() {
 
                 <li
                   onClick={logout}
-                  className="py-2 px-4 text-red-700 hover:bg-gray-200 cursor-pointer"
+                  className="py-2 px-4 text-red-700 hover:bg-gray-200 cursor-pointer select-none"
                 >
                   <i class="bi bi-box-arrow-right"></i> Logout
                 </li>
@@ -181,7 +181,7 @@ function Navbar() {
         ) : (
           <button
             onClick={() => navigate("/login")}
-            className="flex items-center text-xl gap-2 border border-gray-500 rounded-full px-4 py-2 text-gray-800 hover:bg-gray-100 transition-all"
+            className="flex items-center text-xl gap-2 border border-gray-500 rounded-full px-4 py-2 text-gray-800 hover:bg-gray-100 transition-all "
           >
             <i className="bi bi-person-add"></i>
           </button>

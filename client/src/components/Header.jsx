@@ -18,9 +18,9 @@ const Header = ()=> {
       <p className='mb-8 text-sm sm:text-xl max-w-md font-semibold text-purple-950'>This is your space to explore the latest and coolest tech trends in the IT world.
            </p>
           {userData ? 
-        <button  onClick={() => navigate("/blog-x")} className=' border border-gray-500 rounded-full px-8 py-2.5 hover:bg-gray-100 transition-all'>
+        <button  onClick={() => navigate("/blog-x")} className=' border border-gray-500 rounded-full px-8 py-2.5 hover:bg-gray-100 transition-all select-none'>
           <i class="bi bi-door-open"></i>  Get Started
-        </button>: <button  onClick={() => navigate("/login")} className=' border border-gray-500 rounded-full px-8 py-2.5  hover:bg-gray-100 transition-all'>
+        </button>: <button  onClick={() => navigate("/login")} className=' border border-gray-500 rounded-full px-8 py-2.5  hover:bg-gray-100 transition-all select-none'>
          Login <i class="bi bi-arrow-right"></i>
         </button>  }
 
