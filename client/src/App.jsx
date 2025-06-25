@@ -7,6 +7,7 @@ import EmailVerify from './pages/EmailVerify';
 import BlogX from './pages/BlogX';
 import { ToastContainer } from 'react-toastify';
 import BlogXBlogPage from './pages/BlogXBlogPage';
+import YourSpace from './pages/YourSpace';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/reset-password' element={<ResetPassword/>}/>
         <Route path='/blog-x' element={<BlogX/>}/>
         <Route path='//blogx-journey' element={<BlogXBlogPage/>}/>
+        <Route path='//your-space' element={<YourSpace/>}/>
       </Routes>
     </div>
   )

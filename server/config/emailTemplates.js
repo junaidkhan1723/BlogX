@@ -75,7 +75,7 @@ export const EMAIL_VERIFY_TEMPLATE = `
   <div class="container">
     <div class="header">
       <div class="logo">
-        <img src="https://www.shutterstock.com/image-vector/letter-b-abstract-logo-can-600nw-2470693703.jpg" alt="BlogX Logo" />
+        <img src="https://github.com/junaidkhan1723/BlogX/blob/main/client/public/BlogBG.png" alt="BlogX Logo" />
       </div>
       <h1>Verify Your Email 📩</h1>
     </div>
@@ -179,7 +179,7 @@ export const PASSWORD_RESET_TEMPLATE = `
   <div class="container">
     <div class="header">
       <div class="logo">
-        <img src="https://www.shutterstock.com/image-vector/letter-b-abstract-logo-can-600nw-2470693703.jpg" alt="BlogX Logo" />
+        <img src="https://github.com/junaidkhan1723/BlogX/blob/main/client/public/BlogBG.png" alt="BlogX Logo" />
       </div>
       <h1>Password Reset Request 🔐</h1>
     </div>
@@ -288,7 +288,7 @@ export const WELCOME_TEMPLATE = `
   <div class="container">
     <div class="header">
       <div class="logo">
-        <img src="https://www.shutterstock.com/image-vector/letter-b-abstract-logo-can-600nw-2470693703.jpg" alt="BlogX Logo" />
+        <img src="https://github.com/junaidkhan1723/BlogX/blob/main/client/public/BlogBG.png" alt="BlogX Logo" />
       </div>
       <h1>Welcome to BlogX! 🎉</h1>
     </div>

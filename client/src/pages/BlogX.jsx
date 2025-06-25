@@ -9,7 +9,7 @@ function BlogX() {
     <>
       <Navbar />
 
-      <div className="min-h-screen px-6 py-12 bg-gray-100 text-center flex flex-col items-center pt-50">
+      <div className="min-h-screen px-6 py-12 bg-gray-100 text-center flex flex-col items-center sm:pt-50 pt-30">
         {/* Blog Cards Section */}
         <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {/* Published Blog Card */}
