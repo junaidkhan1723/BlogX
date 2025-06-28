@@ -11,7 +11,7 @@ import blog_pic_3 from "./React.jpg";
 import blog_pic_4 from "./Mongo.jpg";
 import blog_pic_5 from "./GitCo.webp";
 import blog_pic_6 from "./ApiSq.webp";
-import blog_pic_7 from "./GitCo.webp";
+import blog_pic_7 from "./GitM.jpg";
 import blog_pic_8 from "./Responsive.webp";
 import blog_pic_9 from "./MongoDB.webp";
 import blog_pic_10 from "./CICD.jpg";
