@@ -1,84 +1,71 @@
-import React from 'react';
-import Navbar from '../components/Navbar';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import Navbar from "../components/Navbar";
+import BlogList from "../components/BlogList";
+import NewsLetter from "../components/NewsLetter";
+import Footer from "../components/Footer";
 
 function BlogX() {
-  const navigate = useNavigate();
-
   return (
     <>
-      <Navbar />
+      <div className='min-h-screen bg-[url("/gradientBackground.png")] bg-cover bg-center'>
+        <Navbar />
 
-      <div className="min-h-screen px-6 py-12 bg-gray-100 text-center flex flex-col items-center sm:pt-50 pt-30">
-        {/* Blog Cards Section */}
-        <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {/* Published Blog Card */}
-          <div className="bg-white shadow-md rounded-lg p-6 flex flex-col justify-between">
-            <div>
-              <h2 className="text-xl font-semibold text-blue-700 mb-2">📘 How I Built BlogX</h2>
-              <p className="text-sm text-gray-600 mb-4">
-                Curious about the tech behind this site? Read my latest blog post to learn how BlogX was built from scratch!
+        <div className="mx-8 sm:mx-16 xl:mx-24 pt-28 sm:pt-40 relative text-center">
+          <div className="text-center mb-2">
+            <div className="text-indigo-700 inline-flex items-center justify-center gap-4 px-6 py-1.5 sm:mb-2 border border-primary/40 bg-primary/10 rounded-full text-sm animate-bounceX hover:animate-wiggleX hover:text-purple-600 transition duration-300">
+              <p>
+                NEW: AI feature integrated <i className="bi bi-stars"></i>
               </p>
             </div>
-            <button
-              onClick={() => navigate('/blogx-journey')}
-              className="mt-auto px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
-            >
-              Read Blog
-            </button>
           </div>
 
-          {/* Coming Soon Cards */}
-          <div className="bg-white shadow-md rounded-lg p-6 flex items-center justify-center">
-            <p className="text-gray-500 italic">🕓 New blog coming soon...</p>
-          </div>
+          <h1 className="text-2xl sm:text-6xl font-semibold sm:leading-16 text-gray-600">
+            Your Ideas.
+            <span className="text-purple-800 font-semibold"> Your Space.</span>
+            <br />
+            Your Blog.
+          </h1>
 
-          <div className="bg-white shadow-md rounded-lg p-6 flex items-center justify-center">
-            <p className="text-gray-500 italic">🕓 New blog coming soon...</p>
-          </div>
-        </div>
-
-        {/* Under Development Notice */}
-        <div className="w-full max-w-xl bg-yellow-100 border-l-4 border-yellow-500 text-yellow-900 p-4 rounded mb-10">
-          <h3 className="font-bold text-lg">🚧 This Project is Under Development</h3>
-          <p className="text-sm mt-1">
-            I'm currently improving BlogX and adding more features 👨🏻‍💻🚀. Stay tuned!
+          <p className="my-6 sm:my-8 max-w-2xl m-auto max-sm:text-xs text-gray-700 text-center">
+            Your{" "}
+            <span className="font-semibold text-indigo-700">
+              Creative Space
+            </span>{" "}
+            to
+            <span className="font-medium text-purple-700"> Learn</span>,
+            <span className="font-medium text-purple-700"> Build</span>, and
+            <span className="font-medium text-purple-700"> Grow</span> as a
+            <span className="font-semibold text-indigo-700">
+              {" "}
+              Full-Stack Developer
+            </span>
+            .<br />
+            Explore blogs covering everything from
+            <span className="font-medium text-blue-700"> Frontend</span> to
+            <span className="font-medium text-blue-700"> Backend</span>,
+            <span className="font-medium text-green-700"> Databases</span>,
+            <span className="font-medium text-yellow-700"> Dev Tools</span>, and
+            <span className="font-medium text-pink-700"> Deployment</span>.
           </p>
-        </div>
 
-        {/* Social Icons */}
-        <div className="flex gap-4 mb-10">
-          <a
-            href="https://github.com/junaidkhan1723"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
-          >
-            <i className="bi bi-github"></i> GitHub
-          </a>
-          <a
-            href="https://www.linkedin.com/in/junaidkhan1723"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
-          >
-            <i className="bi bi-linkedin"></i> LinkedIn
-          </a>
+          <form className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-400 bg-white rounded overflow-hidden mb-4">
+            <input
+              type="text"
+              placeholder="Search for blogs"
+              required
+              className="w-full pl-4 outline-none"
+            />
+            <button
+              type="submit"
+              className="bg-primary text-white px-4 py-2 sm:px-8 m-1.5 rounded hover:scale-105 transition-all cursor-pointer">
+              Search
+            </button>
+          </form>
         </div>
+        <BlogList />
+        <NewsLetter/>
+        <Footer/>
       </div>
-
-      {/* Footer */}
-      <footer className="w-full bg-white border-t border-gray-300 py-4 text-center text-sm text-gray-600">
-        <p>
-          © 2025 <strong>BlogX</strong>. Built by <strong>Junaid Khan</strong>.{' '}
-          <button
-            onClick={() => navigate('/')}
-            className="text-blue-600 hover:underline ml-1"
-          >
-            Back to Home
-          </button>
-        </p>
-      </footer>
     </>
   );
 }

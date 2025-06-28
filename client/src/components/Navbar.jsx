@@ -1,3 +1,4 @@
+import './Navbar.css'
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { assets } from "../assets/assets.js";
 import { useNavigate } from "react-router-dom";
@@ -88,13 +89,13 @@ function Navbar() {
   return (
     <>
       <div
-        className="w-full flex justify-between items-center p-4 sm:p-2 sm:px-16 
-               fixed top-0 left-0 z-50 backdrop-blur-sm bg-transparent"
+        className="w-full flex justify-between items-center px-1 py-1 sm:py-0 sm:px-4
+               fixed top-0 left-0 z-50 bg-purple-50"
       >
         <img
           src={assets.logo}
           alt="Logo"
-          className="w-18 sm:w-22 cursor-pointer"
+          className="w-30 sm:w-40 cursor-pointer"
           onClick={() => navigate("/")}
         />
 
@@ -102,8 +103,8 @@ function Navbar() {
           <div ref={menuRef} className="relative">
             <div
               onClick={() => setMenuOpen(!menuOpen)}
-              className="w-16 h-12 flex justify-center items-center border border-gray-500
-            text-black font-semibold rounded-lg hover:bg-gray-300 transition-all cursor-pointer"
+              className="w-12 h-10 sm:w-16 sm:h-12 flex justify-center items-center border border-gray-500
+            text-black font-semibold rounded-lg bg-primary/30 hover:bg-gray-300 transition-all cursor-pointer mb-3 me-3"
             >
               <span className="text-xl select-none">{userData.name[0].toUpperCase()}</span>
 
@@ -181,7 +182,7 @@ function Navbar() {
         ) : (
           <button
             onClick={() => navigate("/login")}
-            className="flex items-center text-xl gap-2 border border-gray-500 rounded-full px-4 py-2 text-gray-800 hover:bg-gray-100 transition-all "
+            className="flex items-center text-xl gap-2 bg-indigo-700 border border-gray-500 rounded-full px-4 py-2 sm:px-6 sm:py-3 text-white hover:bg-gray-700 transition-all select-none"
           >
             <i className="bi bi-person-add"></i>
           </button>

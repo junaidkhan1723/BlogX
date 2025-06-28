@@ -49,7 +49,7 @@ function Login() {
         });
 
         if (data.success) {
-          toast.success("Logged In Successfully");
+          toast.success("Login Successfull");
           setIsLoggedin(true);
           navigate("/");
           getUserData();
@@ -68,7 +68,7 @@ function Login() {
         onClick={() => navigate("/")}
         src={assets.logo}
         alt="Logo"
-        className="absolute left-3 sm:left-10 top-3 w-16 sm:w-24 cursor-pointer"
+        className="absolute left-3 sm:left-10 top-3 w-30 sm:w-40 cursor-pointer"
       />
 
       <div className="bg-gradient-to-br from-purple-400 to bg-blue-400 p-8 sm:p-10 rounded-lg shadow-lg w-full max-w-sm text-indigo-500 text-sm">

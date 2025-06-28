@@ -1,16 +1,19 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-Navbar;
+import Footer from "../components/Footer";
 
 function Home() {
   return (
-    <>
-      <div className='flex flex-col items-center justify-center min-h-screen bg-[url("/BlogBG.png")] bg-cover bg-center'>
-        <Navbar />
+    <div className="min-h-screen flex flex-col bg-[url('/gradientBackground.png')] bg-cover bg-center ">
+      
+  
+      <Navbar />     
+      <main className="flex-grow flex items-center justify-center">
         <Header />
-      </div>
-    </>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
