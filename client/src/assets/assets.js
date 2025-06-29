@@ -136,7 +136,7 @@ gap: 1rem;</code></pre>
 <p>This helps create dynamic galleries and dashboards that expand and contract elegantly.</p>
 
 <h3>4. Named Lines for Precision</h3>
-<pre><code>grid-template-columns: [start] 1fr [content] 3fr [end];</code></pre>
+<code>grid-template-columns: [start] 1fr [content] 3fr [end];</code>
 <p>Use named lines to target specific columns for alignment and responsive control.</p>
 
 <h2>💡 Flexbox vs Grid — When to Use What</h2>
@@ -288,8 +288,10 @@ gap: 1rem;</code></pre>
 
 <h3>1. Install Dependencies</h3>
 <pre><code>npm init -y
-npm install express cors dotenv mongoose morgan
-npm install express-validator jsonwebtoken bcryptjs
+npm install express cors dotenv mongoose
+ morgan
+npm install express-validator jsonwebtoken
+ bcryptjs
 </code></pre>
 
 <h3>2. Basic Server Setup</h3>
@@ -305,14 +307,16 @@ app.use(cors());
 app.use('/api/blogs', require('./routes/blogRoutes'));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =&gt; console.log(\`Server running on port \${PORT}\`));
+app.listen(PORT, () =&gt; 
+console.log(\`Server running on port \${PORT}\`));
 </code></pre>
 
 <h3>3. Blog Route Example</h3>
 <pre><code>// routes/blogRoutes.js
 const express = require('express');
 const router = express.Router();
-const { getAllBlogs, createBlog } = require('../controllers/blogController');
+const { getAllBlogs, createBlog } =
+ require('../controllers/blogController');
 
 router.get('/', getAllBlogs);
 router.post('/', createBlog);
@@ -350,7 +354,8 @@ const blogSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Blog', blogSchema);
+module.exports = 
+mongoose.model('Blog', blogSchema);
 </code></pre>
 
 <h2>🔐 Authentication with JWT</h2>
@@ -360,10 +365,12 @@ const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
   const token = req.header('Authorization');
-  if (!token) return res.status(401).json({ message: 'Access Denied' });
+  if (!token) return res.status(401).
+  json({ message: 'Access Denied' });
 
   try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const verified = 
+    jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
     next();
   } catch (err) {
@@ -386,7 +393,8 @@ module.exports = function (req, res, next) {
 <pre><code>// middlewares/errorHandler.js
 function errorHandler(err, req, res, next) {
   console.error(err.stack);
-  res.status(500).json({ message: err.message || 'Internal Server Error' });
+  res.status(500).json(
+  { message: err.message || 'Internal Server Error' });
 }
 module.exports = errorHandler;
 </code></pre>
@@ -942,7 +950,8 @@ git rebase --continue
 
 <h3>7. <strong>Viewport Meta Tag</strong></h3>
 <p>Always include the viewport tag for responsive scaling:</p>
-<pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></pre>
+<pre><code>&lt;meta name="viewport" content=
+"width=device-width,initial-scale=1"&gt;</code></pre>
 
 <h2>⚙️ Tools & Frameworks That Help</h2>
 <ul>
@@ -1062,7 +1071,8 @@ net:
 
 <h3>✅ 4. Use Environment Variables</h3>
 <p>Never hardcode MongoDB credentials in source code. Use <code>.env</code> files:</p>
-<pre><code>MONGO_URI=mongodb+srv://user:password@cluster.mongodb.net/db</code></pre>
+<pre><code>MONGO_URI=mongodb+srv://user:
+password@cluster.mongodb.net/db</code></pre>
 
 <h3>✅ 5. Avoid Overprivileged Roles</h3>
 <ul>
@@ -1120,7 +1130,8 @@ auditLog:
 
 <h3>✅ Analyze with <code>explain()</code></h3>
 <p>Check if your queries are using indexes properly:</p>
-<pre><code>db.users.find({ email: "user@example.com" }).explain("executionStats")</code></pre>
+<pre><code>db.users.find({ email: "user@example.com" }).
+explain("executionStats")</code></pre>
 
 <h3>✅ Use Connection Pooling</h3>
 <ul>

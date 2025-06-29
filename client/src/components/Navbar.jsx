@@ -90,7 +90,7 @@ function Navbar() {
     <>
       <div
         className="w-full flex justify-between items-center px-1 py-1 sm:py-0 sm:px-4
-               fixed top-0 left-0 z-50 bg-purple-50"
+               fixed top-0 left-0 z-100 bg-transparent"
       >
         <img
           src={assets.logo}
