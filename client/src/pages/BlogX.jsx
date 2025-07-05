@@ -10,7 +10,7 @@ function BlogX() {
       <div className='min-h-screen bg-[url("/gradientBackground.png")] bg-cover bg-center'>
         <Navbar />
 
-        <div className="mx-8 sm:mx-16 xl:mx-24 pt-28 sm:pt-40 relative text-center">
+        <div className="mx-8 sm:mx-16 xl:mx-24 pt-4 sm:pt-6 relative text-center">
           <div className="text-center mb-2">
             <div className="text-indigo-700 inline-flex items-center justify-center gap-4 px-6 py-1.5 sm:mb-2 border border-primary/40 bg-primary/10 rounded-full text-sm animate-bounceX hover:animate-wiggleX hover:text-purple-600 transition duration-300">
               <p>
@@ -18,6 +18,8 @@ function BlogX() {
               </p>
             </div>
           </div>
+
+            {/** Heading */}
 
           <h1 className="text-2xl sm:text-6xl font-semibold sm:leading-16 text-gray-600">
             Your Ideas.
@@ -47,6 +49,8 @@ function BlogX() {
             <span className="font-medium text-yellow-700"> Dev Tools</span>, and
             <span className="font-medium text-pink-700"> Deployment</span>.
           </p>
+
+          {/** Search Blogs */}
 
           <form className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-400 bg-white rounded overflow-hidden mb-4">
             <input

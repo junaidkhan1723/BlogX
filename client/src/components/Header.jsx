@@ -11,7 +11,7 @@ const Header = () => {
 
   return (
     <>
-      <div className=" mt-16 sm:mt-20 mx-8 sm:mx-16 xl:mx-24 relative text-center ">
+      <div className="mx-4 sm:mx-16 xl:mx-24 relative text-center ">
         <h1 className=" flex items-center justify-center text-gray-900 gap-2 text-xl sm:text-3xl font-semibold mb-2 sm:mb-2">
           Hey{" "}
           <span className="text-purple-800 font-semibold animate-bounceX hover:animate-wiggleX hover:text-purple-600 transition duration-300 ">

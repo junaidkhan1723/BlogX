@@ -4,6 +4,7 @@ import { assets, blog_data, comments_data } from "../assets/assets.js";
 import Navbar from "../components/Navbar";
 import Moment from "moment";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader.jsx";
 
 function Blog() {
   const { id } = useParams();
@@ -40,7 +41,7 @@ const addComment = async (e) =>{
         className="absolute -top-50 -z-1 opacity-70"
       />
       <Navbar />
-      <div className="text-center mt-30 text-gray-600">
+      <div className="text-center text-gray-600">
         <p className="text-primary py-4 font-medium">
           Published on {Moment(data.createdAt).format("MMMM Do YYYY")}
         </p>
@@ -110,7 +111,7 @@ const addComment = async (e) =>{
       <Footer/>
     </div>
   ) : (
-    <div>Loading...</div>
+    <Loader/>
   );
 }
 

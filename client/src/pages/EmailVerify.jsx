@@ -16,6 +16,8 @@ function EmailVerify() {
 
   axios.defaults.withCredentials = true;
 
+  //sends otp of email varification
+
   useEffect(() => {
     const sendInitialOtp = async () => {
       try {

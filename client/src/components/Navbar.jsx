@@ -89,9 +89,7 @@ function Navbar() {
   return (
     <>
       <div
-        className="w-full flex justify-between items-center px-1 py-1 sm:py-0 sm:px-4
-               fixed top-0 left-0 z-100 bg-transparent"
-      >
+        className="w-full flex justify-between items-center bg-transparent">
         <img
           src={assets.logo}
           alt="Logo"
@@ -152,7 +150,7 @@ function Navbar() {
                 {/** profile icon */}
                 <li
                   onClick={() => {
-                    navigate("/your-space");
+                    navigate("/admin");
                   }}
                   className="py-2 px-4 hover:bg-gray-200 cursor-pointer text-blue-600 select-none"
                 >

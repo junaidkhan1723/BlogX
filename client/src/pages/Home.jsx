@@ -7,7 +7,6 @@ function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-[url('/BlogX.png')] bg-cover bg-center ">
       
- 
       <Navbar />     
       <main className="flex-grow flex items-center justify-center">
         <Header />
