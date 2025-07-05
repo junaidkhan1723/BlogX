@@ -31,4 +31,4 @@ const CommentTableItem = ({comment, fetchComments}) => {
   )
 }
 
-export default CommentTableItem
+export default CommentTableItem;

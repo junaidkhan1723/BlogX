@@ -23,7 +23,7 @@ useEffect(()=>{
 
 
   return (
-    <div className='flex-1 p-4 md:px-14 bg-blue-50/50'>
+    <div className='flex-1 md:py-4 md:px-14 bg-blue-50/50'>
       
       <div className="flex flex-wrap gap-2 sm:gap-4">
         {/** Blogs */}
@@ -67,7 +67,7 @@ useEffect(()=>{
       </div>
 
        {/** table  */}
-        <div className='relative  max-w-4xl overflow-x-auto shadow rounded-lg scrollbar-hide bg-white'>
+        <div className='relative  max-w-4xl overflow-x-auto shadow-lg rounded-lg scrollbar-hide bg-white'>
           <table className='w-full text-sm text-gray-500'>
             <thead className='text-xs text-gray-600 text-left uppercase'>
                 <tr>

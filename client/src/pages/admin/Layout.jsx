@@ -1,17 +1,18 @@
 import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/admin/Sidebar";
 
 const Layout = () => {
-  const navigate = useNavigate();
-
   return (
     <>
-      <Navbar/>
-      <div className="flex min-h-[calc(100vh-70px)] border border-t-gray-300 border-b-gray-50">
+      <Navbar />
+      <div className="flex flex-col md:flex-row min-h-screen border border-t-gray-300">
         <Sidebar />
-        <Outlet />
+        {/* spacing for mobile nav bar */}
+        <div className="flex-grow bg-white p-4 pb-20 md:pb-4">
+          <Outlet />
+        </div>
       </div>
     </>
   );
