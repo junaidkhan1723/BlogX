@@ -48,7 +48,7 @@ const AdminLogin = () => {
                 value={email}
                 type='email'
                 required
-                placeholder='junaid123@gmail.com'
+                placeholder='junaid@gmail.com'
                 className='border-b-2 border-gray-300 p-2 outline-none mb-6'
               />
             </div>

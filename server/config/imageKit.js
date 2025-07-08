@@ -1,4 +1,9 @@
+
+import dotenv from "dotenv";
+dotenv.config();
+
 import ImageKit from "imagekit";
+
 
 
 var imagekit = new ImageKit({
