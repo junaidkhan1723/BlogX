@@ -7,12 +7,9 @@ import { AppContent } from "../../context/appContext";
 
 const Layout = () => {
 
-  const {axios, setToken, navigate} = useContext(AppContent) 
+  const { navigate} = useContext(AppContent) 
 
   const logout = ()=>{
-    localStorage.removeItem('token')
-    axios.defaults.headers.common['Authorization'] = null;
-    setToken(null);
     navigate('/blog-x')
   }
 
