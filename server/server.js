@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/mongodb.js";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
+import blogRouter from "./routes/blogRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -41,7 +43,12 @@ app.get("/", (req, res) => {
   res.send("API Working");
 });
 
+// user Routes
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+
+// admin and blog routes
+app.use("/api/blog", blogRouter);
+app.use("/api/admin", adminRouter);
 
 app.listen(port, () => console.log(`server started on port:${port}`));

@@ -2,7 +2,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
+import {useNavigate} from 'react-router-dom'
 // context
 export const AppContent = createContext();
 
@@ -13,9 +13,15 @@ export const AppContextProvider = (props) => {
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+    const navigate = useNavigate();
+
     const [isLoggedin, setIsLoggedin] = useState(false);
     const [userData, setUserData] = useState(null);
+    const [token, setToken] = useState(null);
+    const [blogs, setBlogs] = useState([]);
+    const [input, setInput] = useState('');
 
+    
     // get user authentication 
     const getAuthState = async ()=>{
         try {
@@ -54,11 +60,35 @@ export const AppContextProvider = (props) => {
 
     },[]);
 
+
+
+    //gets blog data
+
+const fetchBlogs = async () => {
+  try {
+    const { data } = await axios.get(`${backendUrl}/api/blog/all`);
+    data.success ? setBlogs(data.blogs) : toast.error(data.message);
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
+
+    useEffect(()=>{
+        fetchBlogs();
+        const token = localStorage.getItem('token')
+        if(token){
+            setToken(token)
+            axios.defaults.headers.common['Authorization'] = `${token}`
+        }
+    },[])
+
     const value = {      
         backendUrl,
         isLoggedin, setIsLoggedin,
         userData, setUserData,
-        getUserData
+        getUserData,blogs, setBlogs,
+        input, setInput, navigate,token,
+        setToken,axios
     };
 
     return (

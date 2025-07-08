@@ -1,4 +1,5 @@
 import arrow_icon from "./arrow_icon.svg";
+import arrow from "./arrow.svg";
 import lock_icon from "./lock_icon.svg";
 import logo from "./logo.png";
 import mail_icon from "./mail_icon.svg";
@@ -37,6 +38,7 @@ import dashboard_icon_4 from "./dashboard_icon_4.svg";
 
 export const assets = {
   arrow_icon,
+  arrow,
   lock_icon,
   logo,
   mail_icon,

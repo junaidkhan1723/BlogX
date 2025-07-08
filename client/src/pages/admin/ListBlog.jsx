@@ -1,13 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import { blog_data } from '../../assets/assets'
+import React, { useContext, useEffect, useState } from 'react'
 import BlogTableItem from '../../components/admin/BlogTableItem';
+import { AppContent } from '../../context/appContext';
+import { toast } from 'react-toastify';
 
 const ListBlog = () => {
 
-  const [blogs, setBlogs] = useState([])
-
+  const [blogs, setBlogs] = useState([]);
+    const {axios, backendUrl} = useContext(AppContent);
+  
+ // fetche blogs from server
   const fetchBlogs = async ()=>{
-    setBlogs(blog_data)
+    try {
+      const {data} = await axios.get(`${backendUrl}/api/admin/blogs`);
+      if(data.success){
+        setBlogs(data.blogs)
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
   };
 
   useEffect(()=>{

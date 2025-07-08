@@ -1,13 +1,44 @@
-import React, { useState } from "react";
-import { blog_data, blogCategories } from "../assets/assets";
+import React, { useState, useContext } from "react";
+import { blogCategories } from "../assets/assets.js";
 import { motion } from "motion/react";
 import BlogCard from "./BlogCard";
+import { AppContent } from "../context/appContext";
+import Loader from "./Loader";
 
 function BlogList() {
   const [menu, setMenu] = useState("All");
+  const { blogs, input } = useContext(AppContent);
+
+  const filteredBlogs = () => {
+    let result = blogs;
+
+    // Filter by search input
+    if (input.trim()) {
+      result = result.filter((blog) =>
+        blog.title?.toLowerCase().includes(input.toLowerCase()) ||
+        blog.category?.toLowerCase().includes(input.toLowerCase())
+      );
+    }
+
+    // Filter by selected category
+    if (menu !== "All") {
+      result = result.filter((blog) => blog.category === menu);
+    }
+
+    return result;
+  };
+
+  const finalBlogs = filteredBlogs();
+
+  // Show loader only if blogs haven't loaded yet
+  if (!blogs || blogs.length === 0) {
+    return <Loader />;
+  }
+
   return (
     <>
       <div>
+        {/* Category Buttons */}
         <div className="flex justify-center gap-2 sm:gap-8 my-10 relative">
           {blogCategories.map((item) => (
             <div key={item} className="relative">
@@ -29,12 +60,16 @@ function BlogList() {
             </div>
           ))}
         </div>
+
+        {/* Blog Cards or Fallback */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 mb-24 mx-8 sm:mx-16 xl:mx-40">
-          {blog_data
-            .filter((blog) => (menu === "All" ? true : blog.category === menu))
-            .map((blog) => (
-              <BlogCard key={blog._id} blog={blog} />
-            ))}{" "}
+          {finalBlogs.length > 0 ? (
+            finalBlogs.map((blog) => <BlogCard key={blog._id} blog={blog} />)
+          ) : (
+            <p className="text-gray-500 text-center col-span-full">
+              No blogs available for this category.
+            </p>
+          )}
         </div>
       </div>
     </>

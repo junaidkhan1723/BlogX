@@ -1,14 +1,29 @@
-import React from "react";
-import Navbar from "../components/Navbar";
+import React, { useContext, useRef } from "react";
 import BlogList from "../components/BlogList";
 import NewsLetter from "../components/NewsLetter";
 import Footer from "../components/Footer";
+import { AppContent } from "../context/appContext";
+import AdminNavBar from "../components/admin/AdminNavBar";
 
 function BlogX() {
+
+      const {setInput, input} = useContext(AppContent);
+      const inputRef = useRef();
+
+      const onSubmitHandler = async (e)=>{
+        e.preventDefault();
+        setInput(inputRef.current.value);
+      };
+
+      const onClear = ()=>{
+        setInput('')
+        inputRef.current.value = ''
+      }
   return (
+
     <>
       <div className='min-h-screen bg-[url("/gradientBackground.png")] bg-cover bg-center'>
-        <Navbar />
+        <AdminNavBar/>
 
         <div className="mx-8 sm:mx-16 xl:mx-24 pt-4 sm:pt-6 relative text-center">
           <div className="text-center mb-2">
@@ -52,8 +67,8 @@ function BlogX() {
 
           {/** Search Blogs */}
 
-          <form className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-400 bg-white rounded overflow-hidden mb-4">
-            <input
+          <form onSubmit={onSubmitHandler} className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-400 bg-white rounded overflow-hidden mb-4">
+            <input ref={inputRef}
               type="text"
               placeholder="Search for blogs"
               required
@@ -65,6 +80,12 @@ function BlogX() {
               Search
             </button>
           </form>
+        </div>
+        <div className="text-center">
+          {
+          input && 
+          <button onClick={onClear} className="border font-light text-xs py-1 px-3 rounded-sm shadow-custom-sm cursor-pointer">Clear search</button>
+          }
         </div>
         <BlogList />
         <NewsLetter/>

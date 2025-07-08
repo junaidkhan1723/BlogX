@@ -96,15 +96,15 @@ function Navbar() {
           className="w-30 sm:w-40 cursor-pointer"
           onClick={() => navigate('/')}
         />
-
         {/* Right Side: User Profile / Login Button */}
         {userData ? (
           <div className="relative z-500">
-            {/* Profile Initial (J) Button */}
+            
+            {/* Profile Initial (username first letter) Button */}
             <div
               onClick={() => setMenuOpen(!menuOpen)}
               className="w-12 h-10 sm:w-16 sm:h-12 flex justify-center items-center border border-gray-500
-              text-black dark:text-gray-900 font-semibold rounded-lg bg-primary/30 hover:bg-gray-300 dark:hover:bg-gray-400 transition-all cursor-pointer mb-3 me-3"
+              text-white  font-semibold rounded-lg bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-400 transition-all cursor-pointer mb-3 me-3"
             >
               <span className="text-xl select-none">{userData.name[0].toUpperCase()}</span>
               {/*  Blue Tick if Verified */}
@@ -184,8 +184,8 @@ function Navbar() {
                     }}
                     className="py-2 px-4 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-600 cursor-pointer transition-all hover:scale-105"
                   >
-                    <i className="bi bi-person-check text-lg"></i>
-                    <span>Admin</span>
+                    <i class="bi bi-folder-plus"></i>
+                    <span>Add Blogs</span>
                   </li>
 
                   {/* Read BlogX */}

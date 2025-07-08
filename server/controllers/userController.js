@@ -1,3 +1,4 @@
+
 import userModel from "../models/userModel.js";
 
 export const getUserData = async (req, res)=>{
@@ -22,3 +23,4 @@ export const getUserData = async (req, res)=>{
         res.json({ success: false, message: error.message})
     }
 };
+

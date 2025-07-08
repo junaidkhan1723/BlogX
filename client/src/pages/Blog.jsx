@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { assets, blog_data, comments_data } from "../assets/assets.js";
+import { assets } from "../assets/assets.js";
 import Navbar from "../components/Navbar";
 import Moment from "moment";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader.jsx";
+import { AppContent } from "../context/appContext.jsx";
+import { toast } from "react-toastify";
+import AdminNavBar from "../components/admin/AdminNavBar.jsx";
 
 function Blog() {
   const { id } = useParams();
+
+  const {axios, backendUrl}= useContext(AppContent)
 
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
@@ -15,17 +20,49 @@ function Blog() {
     const [content, setContent] = useState('');
 
 
+
+    // fetch data
   const fetchBlogData = async () => {
-    const data = blog_data.find((item) => item._id === id);
-    setData(data);
+    try {
+      const {data} = await axios.get(`${backendUrl}/api/blog/${id}`)
+      data.success ? setData(data.blog) : toast.error(data.message)
+    } catch (error) {
+      toast.error(error.message)
+    }
   };
 
-  const fetchComments = async () => {
-    setComments(comments_data);
-  };
+
+  // fetch comments 
+
+ const fetchComments = async () => {
+  try {
+    const { data } = await axios.post(`${backendUrl}/api/blog/comments`, {blogId: id });
+    if (data.success) {
+      setComments(data.comments);
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
+
+// add comments
 
 const addComment = async (e) =>{
     e.preventDefault();
+    try {
+      const { data } = await axios.post(`${backendUrl}/api/blog/add-comment`, { blog: id, name, content });
+      if(data.success){
+        toast.success(data.message)
+        setName('');
+        setContent('')
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
 }
 
   useEffect(() => {
@@ -40,7 +77,7 @@ const addComment = async (e) =>{
         alt=""
         className="absolute -top-50 -z-1 opacity-70"
       />
-      <Navbar />
+      <AdminNavBar/>
       <div className="text-center text-gray-600">
         <p className="text-primary py-4 font-medium">
           Published on {Moment(data.createdAt).format("MMMM Do YYYY")}
@@ -56,17 +93,20 @@ const addComment = async (e) =>{
       </div>
 
       <div className="relative px-5 max-w-5xl mx-auto my-10 mt-6">
-        <img src={data.image} alt="" className="rounded-3xl mb-5 mx-auto" />
+        <img src={data.image} alt="blog image" className="rounded-3xl mb-5 mx-auto" />
         <div
           className="rich-text max-w-3xl mx-auto"
           dangerouslySetInnerHTML={{ __html: data.description }}
         ></div>
 
-        {/** comment section */}
+        {/** show comments avaible on blogs */}
 
         <div className="mt-14 mb-10 max-w-3xl mx-auto ">
           <p className="font-semibold mb-4">Comments ({comments.length})</p>
-          <div className="flex flex-col gap-4">
+          {comments.length === 0 ? (
+            <p className="text-gray-500">No comments yet.</p>
+          ) : (
+            <div className="flex flex-col gap-4">
             {comments.map((item, index) => (
               <div
                 key={index}
@@ -81,9 +121,11 @@ const addComment = async (e) =>{
               </div>
             ))}
           </div>
+)}
+      
           
           
-           {/** comment section */}
+           {/** post comments on blog */}
         <div className="max-w-3xl max-auto mt-4">
           <p className="font-semibold mb-4">Add your comment</p>
           <form onSubmit={addComment} className=" flex flex-col items-start gap-4 max-w-lg">
