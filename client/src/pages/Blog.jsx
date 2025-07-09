@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { assets } from "../assets/assets.js";
-import Navbar from "../components/Navbar";
 import Moment from "moment";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader.jsx";
@@ -12,7 +11,7 @@ import AdminNavBar from "../components/admin/AdminNavBar.jsx";
 function Blog() {
   const { id } = useParams();
 
-  const {axios, backendUrl}= useContext(AppContent)
+  const {axios, backendUrl, navigate}= useContext(AppContent)
 
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
@@ -78,6 +77,17 @@ const addComment = async (e) =>{
         className="absolute -top-50 -z-1 opacity-70"
       />
       <AdminNavBar/>
+       <button
+      onClick={() => navigate('/blog-x')}
+      className="fixed top-20 right-6 z-99 
+                 bg-primary text-white shadow-lg 
+                 hover:bg-gray-800 border border-gray-300 
+                p-2 md:p-3 rounded-full transition duration-300 
+                 md:top-30 md:right-14"
+      title="Go Back"
+    >
+       <i class="bi bi-arrow-left"></i>
+    </button>
       <div className="text-center text-gray-600">
         <p className="text-primary py-4 font-medium">
           Published on {Moment(data.createdAt).format("MMMM Do YYYY")}

@@ -3,30 +3,24 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/admin/Sidebar";
 import { assets } from "../../assets/assets";
 import { AppContent } from "../../context/appContext";
+import Navbar from "../../components/Navbar";
 
 
 const Layout = () => {
 
   const { navigate} = useContext(AppContent) 
 
-  const logout = ()=>{
-    navigate('/blog-x')
-  }
+ 
 
   return (
     <>
-      <div className="flex justify-between items-center mx-2 sm:mx-8 border-b border-gray-200">
-        <img onClick={()=> navigate('/')} src={assets.logo} alt="logo" className='w-24 sm:w-32 cursor-pointer' title="Home" />
-        <button onClick={logout} className='flex items-center gap-1 rounded-full text-xs sm:text-sm
-               cursor-pointer bg-primary hover:bg-gray-700 text-white px-2 py-2 sm:px-6 '>Logout</button>
-            
-      </div>
+     <Navbar/>
       <button
       onClick={() => navigate('/blog-x')}
-      className="fixed top-20 right-6 z-1000 
+      className="fixed top-20 right-6 z-99 
                  bg-primary text-white shadow-lg 
                  hover:bg-gray-800 border border-gray-300 
-                 p-3 rounded-full transition duration-300 
+                p-2 sm:p-3 rounded-full transition duration-300 
                  md:top-30 md:right-14"
       title="Go Back"
     >

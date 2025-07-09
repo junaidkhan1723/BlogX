@@ -42,6 +42,9 @@ const App = () => {
         <Route path="/blog-x" element={ <BlogX />} />
         <Route path="/blog/:id" element={<Blog />} />
         <Route path="/admin" element={token ? <Layout/> :<AdminLogin/> }>
+        <Route path="/admin/addBlog" element={<AddBlog/>}/>
+        <Route path="/admin/listBlog" element={<ListBlog/>}/>
+        <Route path="/admin/comments" element={<Comments/>}/>
         <Route index element={<Dashboard/>}/>
         <Route path="addBlog" element={<AddBlog/>}/>
         <Route path="listBlog" element={<ListBlog/>}/>

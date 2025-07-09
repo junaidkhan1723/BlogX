@@ -43,6 +43,7 @@ const AddBlog = () => {
         toast.success(data.message);
         setImage(false)
         setTitle('')
+        setSubTitle('')
         quillRef.current.root.innerHTML = ''
         setCategory('Frontend')
       }else{

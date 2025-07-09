@@ -2,14 +2,18 @@ import React, { useContext, useEffect, useState } from 'react'
 import BlogTableItem from '../../components/admin/BlogTableItem';
 import { AppContent } from '../../context/appContext';
 import { toast } from 'react-toastify';
+import Loader from '../../components/Loader';
 
 const ListBlog = () => {
 
   const [blogs, setBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     const {axios, backendUrl} = useContext(AppContent);
   
  // fetche blogs from server
   const fetchBlogs = async ()=>{
+    setLoading(true);
     try {
       const {data} = await axios.get(`${backendUrl}/api/admin/blogs`);
       if(data.success){
@@ -19,6 +23,8 @@ const ListBlog = () => {
       }
     } catch (error) {
       toast.error(error.message)
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -31,7 +37,12 @@ const ListBlog = () => {
     <div className=' flex-1 pt-5 sm:pt-8 sm:pl-16 bg-blue-50/50'>
       <h1>All blogs</h1>
 
-      <div className='relative  mt-4 max-w-4xl overflow-x-auto shadow-lg rounded-lg scrollbar-hide bg-white'>
+       {loading ? (
+          <div className="py-10 text-center">
+            <Loader/>
+          </div>
+        ) :
+      (<div className='relative  mt-4 max-w-4xl overflow-x-auto shadow-lg rounded-lg scrollbar-hide bg-white'>
           <table className='w-full text-sm text-gray-500'>
             <thead className='text-xs text-gray-600 text-left uppercase'>
                 <tr>
@@ -49,7 +60,7 @@ const ListBlog = () => {
               })}
             </tbody>
           </table>
-        </div>
+        </div>)}
     </div>
   )
 }

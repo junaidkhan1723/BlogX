@@ -104,7 +104,7 @@ function Navbar() {
             <div
               onClick={() => setMenuOpen(!menuOpen)}
               className="w-12 h-10 sm:w-16 sm:h-12 flex justify-center items-center border border-gray-500
-              text-white  font-semibold rounded-lg bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-400 transition-all cursor-pointer mb-3 me-3"
+              text-white  font-semibold rounded-lg bg-gray-800 hover:bg-zinc-500 transition-all cursor-pointer mb-3 me-3"
             >
               <span className="text-xl select-none">{userData.name[0].toUpperCase()}</span>
               {/*  Blue Tick if Verified */}
@@ -126,7 +126,7 @@ function Navbar() {
             {/* Sliding Drawer Panel */}
             <div
               ref={menuRef}
-              className={`fixed top-0 right-0 h-screen w-48 sm:w-60 bg-white dark:bg-gray-800 shadow-lg border-l border-gray-200 dark:border-gray-600 z-50 transform transition-transform duration-300 ease-in-out ${
+              className={`fixed top-0 right-0 h-screen w-48 sm:w-60 bg-white dark:bg-neutral-200 shadow-lg border-l border-gray-200 dark:border-gray-600 z-100 transform transition-transform duration-300 ease-in-out ${
                 menuOpen ? 'translate-x-0' : 'translate-x-full'
               }`}
             >
@@ -135,7 +135,7 @@ function Navbar() {
                 <div className="flex justify-end mb-4">
                   <button
                     onClick={() => setMenuOpen(false)}
-                    className="text-gray-700 dark:text-white hover:text-red-600 transition-all text-xl"
+                    className="text-gray-700 dark:text-black hover:text-red-600 transition-all text-xl"
                   >
                     <i className="bi bi-x-lg"></i>
                   </button>
@@ -182,10 +182,46 @@ function Navbar() {
                       navigate('/admin');
                       setMenuOpen(false);
                     }}
+                    className="py-2 px-4 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-primary cursor-pointer transition-all hover:scale-105"
+                  >
+                    <i class="bi bi-briefcase"></i>
+                    <span>Dashboard</span>
+                  </li>
+
+                         {/* Add Blogs Link */}
+                  <li
+                    onClick={() => {
+                      navigate('/admin/addBlog');
+                      setMenuOpen(false);
+                    }}
                     className="py-2 px-4 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-600 cursor-pointer transition-all hover:scale-105"
                   >
                     <i class="bi bi-folder-plus"></i>
                     <span>Add Blogs</span>
+                  </li>
+
+                       {/* Blog List */}
+                  <li
+                    onClick={() => {
+                      navigate('/admin/listBlog');
+                      setMenuOpen(false);
+                    }}
+                    className="py-2 px-4 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-cyan-700 cursor-pointer transition-all hover:scale-105"
+                  >
+                    <i class="bi bi-list-stars"></i>
+                    <span>Blog List</span>
+                  </li>
+
+                       {/* Comments Link */}
+                  <li
+                    onClick={() => {
+                      navigate('/admin/comments');
+                      setMenuOpen(false);
+                    }}
+                    className="py-2 px-4 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-emerald-700 cursor-pointer transition-all hover:scale-105"
+                  >
+                   <i class="bi bi-chat-left-dots"></i>
+                    <span>Comments</span>
                   </li>
 
                   {/* Read BlogX */}
@@ -194,7 +230,7 @@ function Navbar() {
                       navigate('/blog-x');
                       setMenuOpen(false);
                     }}
-                    className="py-2 px-4 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-300 cursor-pointer transition-all hover:scale-105"
+                    className="py-2 px-4 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-900 cursor-pointer transition-all hover:scale-105"
                   >
                     <i className="bi bi-book text-lg"></i>
                     <span>Read Blogs</span>
