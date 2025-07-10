@@ -3,18 +3,28 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/admin/Sidebar";
 import { assets } from "../../assets/assets";
 import { AppContent } from "../../context/appContext";
-import Navbar from "../../components/Navbar";
 
 
 const Layout = () => {
 
-  const { navigate} = useContext(AppContent) 
 
- 
+ const {axios, setToken, navigate} = useContext(AppContent) 
+
+  const logout = ()=>{
+    localStorage.removeItem('token')
+    axios.defaults.headers.common['Authorization'] = null;
+    setToken(null);
+    navigate('/blog-x')
+  }
 
   return (
     <>
-     <Navbar/>
+     <div className="flex justify-between items-center mx-2 sm:mx-8 border-b border-gray-200">
+        <img onClick={()=> navigate('/')} src={assets.logo} alt="logo" className='w-24 sm:w-32 cursor-pointer' title="Home" />
+        <button onClick={logout} className='flex items-center gap-1 rounded-full text-xs sm:text-sm
+               cursor-pointer bg-primary hover:bg-gray-700 text-white px-2 py-2 sm:px-6 '>Logout</button>
+            
+      </div>
       <button
       onClick={() => navigate('/blog-x')}
       className="fixed top-20 right-6 z-99 

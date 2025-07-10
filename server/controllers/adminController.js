@@ -1,6 +1,7 @@
-import jwt from 'jsonwebtoken'
 import Blog from '../models/Blog.js';
 import Comment from "../models/Comment.js";
+import jwt from 'jsonwebtoken'
+
 
 export const adminLogin = async (req, res) => {
   try {
@@ -17,7 +18,6 @@ export const adminLogin = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
-
 //all blogs
 export const getAllBlogsAdmin = async (req, res)=>{
     try {
@@ -69,16 +69,24 @@ export const getDashboard = async (req, res)=>{
 
 // delete comment
 
-export const deleteCommentById = async (req, res)=>{
-    try {
-        const {id} = req.body;
-        await Comment.findByIdAndDelete(id);
-        res.json({success: true, message: 'Comment deleted successfully'})
-    } catch (error) {
-          res.json({ success: false, message: error.message})
-        
+export const deleteCommentById = async (req, res) => {
+  try {
+    const { id, adminPassword } = req.body;
+
+    // Check admin password
+    if (!adminPassword || adminPassword !== process.env.ADMIN_PASSWORD1) {
+      return res.status(401).json({ success: false, message: "Unauthorized: Invalid Admin Password" });
     }
+
+    // Delete the comment
+    await Comment.findByIdAndDelete(id);
+    res.json({ success: true, message: "Comment deleted successfully" });
+
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
 };
+
 
 
 // comment approvel

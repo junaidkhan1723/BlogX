@@ -80,21 +80,29 @@ export const getBlogById = async (req, res)=>{
 
  
 // delete blog
-export const deleteBlogById = async (req, res)=>{
-    try {
-        const {id} = req.body;
-        await Blog.findByIdAndDelete(id);
+// delete blog (admin protected)
+export const deleteBlogById = async (req, res) => {
+  try {
+    const { id, adminPassword } = req.body;
 
-        // delete all comment on this blog
-        await Comment.deleteMany({blog: id})
-
-        res.json({success: true, message: 'Blog deleted successfully'})
-
-    } catch (error) {
-         res.json({success: false, message: error.message})
-       
+    // ✅ Step 1: Check admin password
+    if (!adminPassword || adminPassword !== process.env.ADMIN_PASSWORD1) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: Invalid Admin Password",
+      });
     }
+
+    // ✅ Step 2: Delete blog and related comments
+    await Blog.findByIdAndDelete(id);
+    await Comment.deleteMany({ blog: id });
+
+    res.json({ success: true, message: "Blog deleted successfully" });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
 };
+
 
 //pusbish or unpublish toggle
 

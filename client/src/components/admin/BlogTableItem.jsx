@@ -11,21 +11,31 @@ const BlogTableItem = ({blog, fetchBlogs, index}) => {
     const {axios, backendUrl} = useContext(AppContent)
 
     // delete blogs
-    const deleteBlog = async ()=>{
-      const confirm = window.confirm('Are you sure you want to delete this blog?');
-      if(!confirm) return;
-      try {
-      const {data} = await axios.post(`${backendUrl}/api/blog/delete`, {id: blog._id});
-      if(data.success){
-        toast.success(data.message)
-        await fetchBlogs();
-      }else{
-        toast.error(data.message)
-      }
-      } catch (error) {
-        toast.error(error.message)
-      }
-    };
+    const deleteBlog = async () => {
+  const confirm = window.confirm('Are you sure you want to delete this blog?');
+  if (!confirm) return;
+
+  //  Prompt admin password
+  const adminPassword = prompt('Enter Admin Password to delete the blog');
+  if (!adminPassword) return;
+
+  try {
+    const { data } = await axios.post(`${backendUrl}/api/blog/delete`, {
+      id: blog._id,
+      adminPassword: adminPassword, // send password to backend
+    });
+
+    if (data.success) {
+      toast.success(data.message);
+      await fetchBlogs();
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    toast.error(error.response?.data?.message || error.message);
+  }
+};
+
 
 
     // toggle publish
