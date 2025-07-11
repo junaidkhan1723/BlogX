@@ -16,7 +16,7 @@ export const EMAIL_VERIFY_TEMPLATE = `
     .container {
       max-width: 500px;
       margin: 50px auto;
-     background-color: white;
+     background-color: #1e293b;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
@@ -120,7 +120,7 @@ export const PASSWORD_RESET_TEMPLATE = `
     .container {
       max-width: 500px;
       margin: 50px auto;
-      background-color: white;
+      background-color: #1e293b;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
@@ -224,7 +224,7 @@ export const WELCOME_TEMPLATE = `
     .container {
       max-width: 520px;
       margin: 50px auto;
-      background-color: white;;
+      background-color: #1e293b;;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
