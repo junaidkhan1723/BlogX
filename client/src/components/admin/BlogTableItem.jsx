@@ -3,12 +3,15 @@ import { assets } from '../../assets/assets';
 import { AppContent } from '../../context/appContext';
 import { toast } from 'react-toastify';
 
+
 const BlogTableItem = ({blog, fetchBlogs, index}) => {
+
+
 
     const {title, createdAt} = blog;
     const BlogDate = new Date(createdAt);
 
-    const {axios, backendUrl} = useContext(AppContent)
+    const {axios, backendUrl, navigate} = useContext(AppContent)
 
     // delete blogs
     const deleteBlog = async () => {
@@ -58,7 +61,7 @@ const BlogTableItem = ({blog, fetchBlogs, index}) => {
     <>
     <tr className='border-y border-gray-300  '>
       <th className=' py-4 sm:px-2 sm:py-4 '>{ index }</th>
-      <td className='py-4 sm:px-2 sm:py-4 '>{ title }</td>
+      <td onClick={()=>navigate('/blog-x')} className='py-4 sm:px-2 sm:py-4 cursor-pointer'>{ title }</td>
       <td className='px-2 py-4 max-sm:hidden'>{ BlogDate.toDateString() }</td>
       <td className='px-2 py-4 max-sm:hidden'>
         <p className={`${blog.isPublished ? "text-green-600" : "text-orange-700"}`}>

@@ -96,7 +96,7 @@ const AddBlog = () => {
             <input onChange={(e)=> setImage(e.target.files[0])} type="file" id='image' hidden required/>
           </label>
 
-           {/** Author Naem */}
+           {/** Author Name */}
           <p className='mt-4'>Author Name</p>
           <input type="text" placeholder='Type here...' required className='w-full max-w-lg mt-2 border border-gray-300 outline-none rounded'
           onChange={(e)=> setAuthorName(e.target.value)} value={authorName}/>
