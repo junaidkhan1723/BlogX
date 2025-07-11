@@ -9,14 +9,14 @@ export const EMAIL_VERIFY_TEMPLATE = `
     body {
       margin: 0;
       padding: 0;
-      background-color: #0f172a;
+      background-color: #1e293b;
       font-family: 'Segoe UI', sans-serif;
       color: #e2e8f0;
     }
     .container {
       max-width: 500px;
       margin: 50px auto;
-      background-color: #1e293b;
+     background-color: white;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
@@ -113,14 +113,14 @@ export const PASSWORD_RESET_TEMPLATE = `
     body {
       margin: 0;
       padding: 0;
-      background-color: #0f172a;
+      background-color: #1e293b;
       font-family: 'Segoe UI', sans-serif;
       color: #e2e8f0;
     }
     .container {
       max-width: 500px;
       margin: 50px auto;
-      background-color: #1e293b;
+      background-color: white;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
@@ -217,14 +217,14 @@ export const WELCOME_TEMPLATE = `
     body {
       margin: 0;
       padding: 0;
-      background-color: #0f172a;
+      background-color: #1e293b;
       font-family: 'Segoe UI', sans-serif;
       color: #e2e8f0;
     }
     .container {
       max-width: 520px;
       margin: 50px auto;
-      background-color: #1e293b;
+      background-color: white;;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
