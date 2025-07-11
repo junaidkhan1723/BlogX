@@ -4,7 +4,7 @@ import { AppContent } from '../../context/appContext';
 import { toast } from 'react-toastify';
 
 const AdminLogin = () => {
-  const { axios, setToken, backendUrl} = useContext(AppContent);
+  const { axios,setIsAdmin, backendUrl} = useContext(AppContent);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -14,13 +14,12 @@ const AdminLogin = () => {
     try {
      const { data } = await axios.post(`${backendUrl}/api/admin/adminLogin`, { email, password });
 
-      if (data.success) {
-        setToken(data.token);
-        localStorage.setItem('token', data.token);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-        toast.success('Login successful!');
-        navigate('/admin');
-      } else {
+     if (data.success) {
+       localStorage.setItem("isAdmin", "true");
+    setIsAdmin(true);
+     toast.success("Login successful!");
+     navigate("/admin");
+} else {
         toast.error(data.message);
       }
     } catch (error) {

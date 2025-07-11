@@ -20,7 +20,9 @@ export const AppContextProvider = (props) => {
     const [token, setToken] = useState(null);
     const [blogs, setBlogs] = useState([]);
     const [input, setInput] = useState('');
-
+    const [isAdmin, setIsAdmin] = useState(
+  localStorage.getItem("isAdmin") === "true"
+);
     
     // get user authentication 
     const getAuthState = async ()=>{
@@ -84,7 +86,7 @@ const fetchBlogs = async () => {
         userData, setUserData,
         getUserData,blogs, setBlogs,
         input, setInput, navigate,token,
-        setToken,axios
+        setToken,axios, isAdmin, setIsAdmin
     };
 
     return (

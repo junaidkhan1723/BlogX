@@ -21,7 +21,7 @@ import { AppContent } from "./context/appContext";
 import { useContext } from "react";
 
 const App = () => {
-  const { token } = useContext(AppContent);
+  const { isAdmin } = useContext(AppContent);
 
   return (
     <>
@@ -48,7 +48,7 @@ const App = () => {
         <Route path="/blog/:id" element={<Blog />} />
 
         {/* Admin Route Wrapper */}
-        <Route path="/admin" element={token ? <Layout /> : <AdminLogin />}>
+        <Route path="/admin" element={isAdmin ? <Layout /> : <AdminLogin />}>
           <Route index element={<Dashboard />} />
           <Route path="addBlog" element={<AddBlog />} />
           <Route path="listBlog" element={<ListBlog />} />
