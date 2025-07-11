@@ -3,26 +3,45 @@ import { assets, blogCategories } from '../../assets/assets'
 import Quill from 'quill';
 import { AppContent } from '../../context/appContext';
 import { toast } from 'react-toastify';
+import {parse} from 'marked'
 
 const AddBlog = () => {
 
   const {axios, backendUrl} = useContext(AppContent);
   const [isAdding, setIsAdding] = useState(false);
-
-
+  const [loading, setLoading] = useState(false);
 
   const editorRef = useRef(null);
   const quillRef = useRef(null);
 
   const [image, setImage] = useState(false);
   const [title, setTitle] = useState('');
+  const [authorName, setAuthorName] = useState('');
   const [subTitle, setSubTitle] = useState('');
   const [category, setCategory] = useState('Frontend');
   const [isPublished, setIsPublished] = useState(false);
 
-  const generateContent = async ()=>{
-    
+
+  //generate content with AI
+ const generateContent = async () => {
+  if (!title) return toast.error('Please enter a title');
+
+  try {
+    setLoading(true);
+    const { data } = await axios.post(`${backendUrl}/api/blog/generate`, { prompt: title });
+
+    if (data.success) {
+      quillRef.current.root.innerHTML = parse(data.content);
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    toast.error(error.message);
+  } finally {
+    setLoading(false);
   }
+};
+
 
   const onSubmitHandler = async (e)=>{
     try {
@@ -30,7 +49,7 @@ const AddBlog = () => {
        setIsAdding(true)
 
        const blog = {
-        title, subTitle, description: quillRef.current.root.innerHTML,
+        title,authorName, subTitle, description: quillRef.current.root.innerHTML,
         category, isPublished
        };
 
@@ -77,6 +96,11 @@ const AddBlog = () => {
             <input onChange={(e)=> setImage(e.target.files[0])} type="file" id='image' hidden required/>
           </label>
 
+           {/** Author Naem */}
+          <p className='mt-4'>Author Name</p>
+          <input type="text" placeholder='Type here...' required className='w-full max-w-lg mt-2 border border-gray-300 outline-none rounded'
+          onChange={(e)=> setAuthorName(e.target.value)} value={authorName}/>
+                 
           {/** Title */}
           <p className='mt-4'>Blog title</p>
           <input type="text" placeholder='Type here...' required className='w-full max-w-lg mt-2 border border-gray-300 outline-none rounded'
@@ -93,8 +117,23 @@ const AddBlog = () => {
             <div ref={editorRef}></div>
 
             {/** Button */}
-            <button type='button' onClick={generateContent} className='absolute bottom-1 right-2 ml-2 text-xs text-indigo-800
-            border-primary/40 bg-primary/20 rounded px-4 py-1.5 hover:underline cursor-pointer animate-bounceX hover:animate-wiggleX hover:text-purple-900 transition duration-300'>Generate with AI <i className="bi bi-stars"></i></button>
+            {loading && (<div className='absolute right-0 top-0 bottom-0 left-0 flex items-center justify-center bg-black/10 mt-2'>
+                  <div className='w-8 h-8 rounded-full border-2 border-t-white animate-spin'>
+
+                  </div>
+            </div>)}
+            <button
+  disabled={loading}
+  type="button"
+  onClick={generateContent}
+  className={`absolute bottom-1 right-2 ml-2 text-xs px-4 py-1.5 rounded transition duration-300
+    ${loading 
+      ? 'bg-neutral-800 text-white cursor-not-allowed animate-none' 
+      : 'text-indigo-800 border-primary/40 bg-primary/20 cursor-pointer hover:underline hover:animate-wiggleX hover:text-purple-900 animate-bounceX'
+    }`}
+>
+  {loading ? 'Generating...' : <>Generate with AI <i className="bi bi-stars"></i></>}
+</button>
           </div>
           <p className='mt-4'>Blog category</p>
             <select onChange={(e)=> setCategory(e.target.value)} name="category" className='mt-2 px-3 border text-gray-500 border-gray-300 outline-none rounded'>

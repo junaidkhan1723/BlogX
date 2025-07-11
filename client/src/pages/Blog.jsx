@@ -98,7 +98,7 @@ const addComment = async (e) =>{
         </h1>
         <h2 className="my-5 max-w-lg truncate mx-auto">{data.subTitle}</h2>
         <p className="inline-block py-1 px-4 rounded-full mb-6 border text-sm border-primary/35 bg-primary/10 font-medium text-primary animate-bounceX hover:animate-wiggleX hover:text-purple-600 transition duration-300">
-          Junaid Khan
+          {data.authorName}
         </p>
       </div>
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { addBlog, addComment, deleteBlogById, getAllBlogs, getBlogById, getBlogComments, togglePublish } from "../controllers/blogControler.js";
+import { addBlog, addComment, deleteBlogById, generateContent, getAllBlogs, getBlogById, getBlogComments, togglePublish } from "../controllers/blogControler.js";
 import upload from "../middleware/multer.js";
 
 const blogRouter = express.Router();
@@ -14,6 +14,7 @@ blogRouter.post('/comments', getBlogComments); //  This must come before '/:blog
 blogRouter.get('/:blogId', getBlogById);
 blogRouter.post('/delete', deleteBlogById);
 blogRouter.post('/toggle-publish', togglePublish);
+blogRouter.post('/generate', generateContent); 
 
 
 export default blogRouter;
