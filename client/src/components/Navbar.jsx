@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 function Navbar() {
   const navigate = useNavigate();
-  const { userData, backendUrl, setUserData, setIsLoggedin } = useContext(AppContent);
+  const { userData, backendUrl, setUserData, setIsLoggedin, setIsAdmin } = useContext(AppContent);
 
   // State for drawer visibility
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,6 +61,8 @@ function Navbar() {
       if (data.success) {
         toast.success(data.message);
         setIsLoggedin(false);
+         localStorage.removeItem("isAdmin");
+        setIsAdmin(false);
         setUserData(null);
         setTimeout(() => navigate('/'), 100); // navigate after logout
       }
