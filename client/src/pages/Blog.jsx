@@ -131,10 +131,8 @@ const addComment = async (e) =>{
               </div>
             ))}
           </div>
-)}
-      
-          
-          
+        )}
+                       
            {/** post comments on blog */}
         <div className="max-w-3xl max-auto mt-4">
           <p className="font-semibold mb-4">Add your comment</p>
@@ -163,7 +161,10 @@ const addComment = async (e) =>{
       <Footer/>
     </div>
   ) : (
-    <Loader/>
+    <div className="flex items-center justify-center py-12">
+       <Loader/>
+    </div>
+   
   );
 }
 
