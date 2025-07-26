@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/', // ✅ Correct and only base path for Vercel
+  base: '/', //  Correct and only base path for Vercel
   plugins: [
     react(),
     tailwindcss(),

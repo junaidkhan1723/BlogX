@@ -1,4 +1,3 @@
-import './Navbar.css';
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { assets } from '../assets/assets.js';
 import { useNavigate } from 'react-router-dom';
