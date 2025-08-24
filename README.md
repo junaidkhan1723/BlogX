@@ -90,7 +90,7 @@ BlogX/
   <li>Icons & illustrations from Bootstrap Icons</li>
 </ul>
 
-<p>⚡ Built with 💙 and passion using the MERN stack.</p>
+<p>⚡ Built with using the MERN stack.</p>
 
 
 

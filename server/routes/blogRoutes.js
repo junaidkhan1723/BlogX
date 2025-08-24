@@ -3,14 +3,12 @@ import { addBlog, addComment, deleteBlogById, generateContent, getAllBlogs, getB
 import upload from "../middleware/multer.js";
 
 const blogRouter = express.Router();
-
-//  Put fixed/static routes BEFORE dynamic ones
+//blogs routes
 blogRouter.post('/add', upload.single('image'), addBlog);
 blogRouter.get('/all', getAllBlogs);
 blogRouter.post('/add-comment', addComment);
-blogRouter.post('/comments', getBlogComments); //  This must come before '/:blogId' otherwise it will cause error
+blogRouter.post('/comments', getBlogComments); 
 
-// tip: Dynamic routes should come last
 blogRouter.get('/:blogId', getBlogById);
 blogRouter.post('/delete', deleteBlogById);
 blogRouter.post('/toggle-publish', togglePublish);

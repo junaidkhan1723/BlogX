@@ -35,7 +35,6 @@ export const register = async (req, res) => {
         from: process.env.SENDER_EMAIL,
         to : email,
         subject : 'Welcome To BlogX',
-       // text : `Welcome to BlogX , Your account has been created with email id: ${email} `
          html: WELCOME_TEMPLATE.replace(/{{email}}/g, user.email).replace(/{{username}}/g, user.name)
 
     }
