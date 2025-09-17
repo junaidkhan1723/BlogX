@@ -62,7 +62,7 @@ const Header = () => {
           ) : (
             <>
               To post or explore blogs, please <strong>sign up</strong> or{" "}
-              <strong>log in</strong>. You can either click the{" "}
+              <strong>log in</strong>. click the{" "}
               <strong>“Login”</strong> button below.
             </>
           )}

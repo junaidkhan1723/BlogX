@@ -177,6 +177,19 @@ function Navbar() {
                     <span>Home</span>
                   </li>
 
+                   {/* Read BlogX */}
+                  <li
+                    onClick={() => {
+                      navigate('/blog-x');
+                      setMenuOpen(false);
+                    }}
+                    className="py-2 px-4 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-900 cursor-pointer transition-all hover:scale-105"
+                  >
+                    <i className="bi bi-book text-lg"></i>
+                    <span>Read Blogs</span>
+                  </li>
+
+
                   {/* Profile/Admin Link */}
                   <li
                     onClick={() => {
@@ -223,18 +236,6 @@ function Navbar() {
                   >
                    <i class="bi bi-chat-left-dots"></i>
                     <span>Comments</span>
-                  </li>
-
-                  {/* Read BlogX */}
-                  <li
-                    onClick={() => {
-                      navigate('/blog-x');
-                      setMenuOpen(false);
-                    }}
-                    className="py-2 px-4 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-900 cursor-pointer transition-all hover:scale-105"
-                  >
-                    <i className="bi bi-book text-lg"></i>
-                    <span>Read Blogs</span>
                   </li>
 
                   {/* Logout */}
