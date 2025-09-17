@@ -71,14 +71,14 @@ const Header = () => {
         {userData ? (
           <button
             onClick={() => navigate("/blog-x")}
-            className=" border border-gray-500 rounded-full px-8 py-2.5 bg-primary/10 animate-bounceX hover:animate-wiggleX hover:text-purple-600 transition-all select-none "
+            className=" border border-gray-500 rounded-full px-8 py-2.5 bg-primary/10 animate-bounceX hover:animate-wiggleX hover:text-purple-600 transition-all select-none cursor-pointer"
           >
             <i class="bi bi-door-open"></i> Get Started
           </button>
         ) : (
           <button
             onClick={() => navigate("/login")}
-            className=" border border-gray-500 rounded-full px-8 py-2.5 bg-primary/30 animate-bounceX hover:animate-wiggleX hover:text-purple-600 transition-all select-none"
+            className=" border border-gray-500 rounded-full px-8 py-2.5 bg-primary/30 animate-bounceX hover:animate-wiggleX hover:text-purple-600 transition-all select-none cursor-pointer"
           >
             Login <i class="bi bi-arrow-right"></i>
           </button>

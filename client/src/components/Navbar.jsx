@@ -136,7 +136,7 @@ function Navbar() {
                 <div className="flex justify-end mb-4">
                   <button
                     onClick={() => setMenuOpen(false)}
-                    className="text-gray-700 dark:text-black hover:text-red-600 transition-all text-xl"
+                    className="text-gray-700 dark:text-black hover:text-red-600 transition-all text-xl cursor-pointer"
                   >
                     <i className="bi bi-x-lg"></i>
                   </button>
@@ -253,7 +253,7 @@ function Navbar() {
           //  If user not logged in, show login button
           <button
             onClick={() => navigate('/login')}
-            className="flex items-center text-xl gap-2 bg-indigo-700 border border-gray-500 rounded-full px-4 py-2 sm:px-6 sm:py-3 text-white hover:bg-gray-700 transition-all select-none"
+            className="flex items-center text-xl gap-2 bg-indigo-700 border border-gray-500 rounded-full px-4 py-2 sm:px-6 sm:py-3 text-white hover:bg-gray-700 transition-all select-none cursor-pointer"
           >
             <i className="bi bi-person-add"></i>
           </button>
