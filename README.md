@@ -1,4 +1,4 @@
-<h1>✨ BlogX – A Simple Full-Stack Blog Website</h1>
+<h1>✨ BlogX – AI Blog Website</h1>
 
 <p>BlogX is a fully functional and responsive blog platform where users can read and comment on blog posts, and admins can manage all blog content securely through a dashboard.</p>
 
