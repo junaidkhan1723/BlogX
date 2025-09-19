@@ -1,4 +1,3 @@
-import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import ResetPassword from "./pages/ResetPassword";
 import Home from "./pages/Home";

@@ -9,82 +9,75 @@ const Header = () => {
   const { userData } = useContext(AppContent);
 
   return (
-    <header className="mx-4 sm:mx-16 xl:mx-24 relative text-center py-12">
-      {/* Greeting */}
-      <h1 className="flex items-center justify-center text-gray-900 gap-2 text-2xl sm:text-3xl font-semibold mb-4">
-        Hey{" "}
-        <span className="text-purple-800 font-bold hover:text-purple-600 animate-bounceX hover:animate-wiggleX transition duration-300">
-          {userData?.name.split(" ")[0] || "Reader"}!
-        </span>
-        <img
-          className="w-8 aspect-square"
-          src={assets.hand_wave}
-          alt="wave"
-        />
-      </h1>
+    <header className="w-full max-w-6xl mx-auto px-6 sm:px-8 py-1 text-center select-none">
+      {/* Greeting Section */}
+      <div className="mb-2 sm:mb-4">
+        <h1 className="flex items-center justify-center gap-2 text-2xl sm:text-4xl font-medium text-gray-700 mb-3">
+          Hey{" "}
+          <span className="text-gray-900 font-semibold animate-bounceX hover:animate-wiggleX transition duration-300">
+            {userData?.name.split(" ")[0] || "Reader"}
+          </span>
+          <img className="w-6 h-6" src={assets.hand_wave} alt="wave" />
+        </h1>
+      </div>
 
       {/* Main Heading */}
-      <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-gray-900">
-        Welcome to{" "}
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-          BlogX
-        </span>
-      </h2>
+      <div className="mb-4 sm:mb-6">
+        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+          Welcome to <span className="shimmer-text transition-all">BlogX</span>
+        </h2>
 
-      {/* Tagline */}
-      <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-700">
-        Write what matters, share what inspires — where thoughts meet the world.
-      </p>
+        {/* Primary Tagline */}
+        <p className="sm:w-[600px] text-xl sm:text-2xl text-gray-600 font-light leading-wide sm:leading-relaxed mx-auto">
+          Write what matters, share what inspires — where thoughts meet the
+          world.
+        </p>
+      </div>
 
-      {/* Secondary Description */}
-      <p className="mt-4 max-w-3xl mx-auto text-base sm:text-lg text-gray-600 leading-relaxed">
-        <span className="font-semibold text-indigo-700">BlogX</span> is your
-        dedicated space to{" "}
-        <span className="font-medium text-purple-700">learn</span> and{" "}
-        <span className="font-medium text-purple-700">grow</span> as a{" "}
-        <span className="font-semibold text-indigo-700">
-          full-stack developer
-        </span>
-        . Explore blogs covering everything from{" "}
-        <span className="font-medium text-blue-700">frontend</span> to{" "}
-        <span className="font-medium text-blue-700">backend</span>,{" "}
-        <span className="font-medium text-green-700">databases</span>,{" "}
-        <span className="font-medium text-yellow-700">dev tools</span>, and{" "}
-        <span className="font-medium text-pink-700">deployment</span> — all in
-        one place.
-      </p>
+      {/* Description Section */}
+      <div className="sm:mb-6 mb-6 ">
+        <p className="text-base sm:text-lg text-gray-700 leading-relaxed sm:w-[600px] mx-auto ">
+          <strong>BlogX</strong> is your dedicated space to learn and grow as a
+          full-stack developer. Explore comprehensive blogs covering frontend,
+          backend, databases, dev tools, and deployment — all in one place.
+        </p>
+      </div>
 
-      {/* Login Info */}
-      <p className="mt-6 max-w-xl mx-auto text-gray-600 text-sm sm:text-base">
-        {userData ? (
-          <>
-            You’re logged in! Click <strong>“Get Started”</strong> to explore
-            all the blogs.
-          </>
-        ) : (
-          <>
-            To post or explore blogs, please <strong>sign up</strong> or{" "}
-            <strong>log in</strong>. Click the{" "}
-            <strong>“Login”</strong> button below.
-          </>
-        )}
-      </p>
+      {/* User Status Info */}
+      <div className="mb-6 sm:mb-8">
+        <p className="text-sm sm:text-base text-gray-600 max-w-xl mx-auto sm:w-[400px]">
+          {userData ? (
+            <>
+              You're logged in! Click <strong>"Get Started"</strong> to explore
+              all the blogs.
+            </>
+          ) : (
+            <>
+              To post or explore blogs, please <strong>sign up</strong> or{" "}
+              <strong>log in</strong>. Click the <strong>"Get Started"</strong> button
+              below.
+            </>
+          )}
+        </p>
+      </div>
 
-      {/* Button */}
-      <div className="mt-8">
+      {/* Action Button */}
+      <div className="flex justify-center">
         {userData ? (
           <button
             onClick={() => navigate("/blog-x")}
-            className="inline-flex items-center gap-2 border border-gray-300 rounded-full px-8 py-3 bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 transition cursor-pointer"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
           >
-            <i className="bi bi-door-open"></i> Get Started
+            <i className="bi bi-book text-lg"></i>
+            Start Reading
           </button>
         ) : (
           <button
             onClick={() => navigate("/login")}
-            className="inline-flex items-center gap-2 border border-gray-300 rounded-full px-8 py-3 bg-purple-600 text-white font-medium shadow hover:bg-purple-700 transition cursor-pointer"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-gray-800 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
           >
-            Login <i className="bi bi-arrow-right"></i>
+            Get Started
+            <i className="bi bi-arrow-right text-lg"></i>
           </button>
         )}
       </div>

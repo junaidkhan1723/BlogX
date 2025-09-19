@@ -1,8 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import "tailwindcss";
 
 * {
-  font-family: "Inter", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -113,4 +114,29 @@
 
 .rich-text a {
   color: #007aff;
+}
+
+
+
+/* shimmer effect header name */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #3219d5 40%,   
+    #000000 90%   
+  );
+  background-size: 200% auto; 
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 5s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
