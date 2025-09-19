@@ -48,7 +48,7 @@ BlogX/
 <h2>📸 Screenshots</h2>
 <ul>
   <li><strong>Home Page:</strong> <em>
-<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/66a0c583-ddf9-419a-a1fa-8ca3745fdbbd" />
+<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/e1373aae-f9dd-40f4-96f8-f64be3ff2b0d" />
 <img width="1920" height="1020" alt="Screenshot 2025-07-13 150309" src="https://github.com/user-attachments/assets/9070bc53-026b-45c8-b3bc-de1aad3282e4" />
 <img width="1920" height="1020" alt="Screenshot 2025-07-13 150317" src="https://github.com/user-attachments/assets/0199d2ef-1090-43b8-a759-6bb59823f028" />
 <img width="1920" height="1020" alt="Screenshot 2025-07-13 150257" src="https://github.com/user-attachments/assets/dafe0662-8fbb-4c15-b407-067616464e0b" />
