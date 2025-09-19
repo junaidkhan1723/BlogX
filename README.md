@@ -90,11 +90,7 @@ BlogX/
   <li>Icons & illustrations from Bootstrap Icons</li>
 </ul>
 
-<<<<<<< HEAD
 <p>⚡ Built with using the MERN stack.</p>
-=======
-<p>⚡ Built using the MERN stack.</p>
->>>>>>> 0f8a8fa080cbd25a6cbd476f332d7a06bcc04fb0
 
 
 
